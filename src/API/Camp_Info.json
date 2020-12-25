@@ -1,0 +1,29 @@
+{
+  "id": 1,
+  "場地名稱": "尤巴士露營區",
+  "縣市區域": "新竹縣",
+  "地址": "五峰鄉桃山村(白蘭部落)",
+  "海拔": "1050",
+  "聯絡電話": "04-2422-1798",
+  "天氣預測": "https://www.cwb.gov.tw/V8/C/W/Town/Town.html?TID=1000518",
+  "經度": 121.08754,
+  "緯度": 24.58141,
+  "景觀圖": "https: //pic.pimg.tw/joycerb/1572333776-1415119134_wn.jpg",
+  "營區地圖": "https://storage.googleapis.com/icamping-tree.appspot.com/images%2Fstore%2Fybs067%2F%E5%B0%A4%E5%B7%B4%E5%A3%AB%E9%9C%B2%E7%87%9F%E5%8D%801200x800_600_thumb_c.png?GoogleAccessId=firebase-adminsdk-3xyzq%40icamping-tree.iam.gserviceaccount.com&Expires=7983763200&Signature=bF0JlMXNi95UtOXx3gSuRicwQV669nyqvquK%2Bq8hwMj9nh4btdd4IqtJ3p1lGlz94MU5k98mLUn%2FYtu0k60CkzUZongdlZVQWSKONKZj7Ws1EW5XtepdMOtbDCpeqiZA8Vnj8XIPjedYXJRJiJU%2BSivVfjJWDMizQgsdBCuKrfj9%2FdlJFyUAihiQcDOmIRB1jr2kIoM5ynY%2FWbNt3TdV3srUWfZkb8SDCMNhSLteDKH1PhuTGB4kOHJAznuyDA5o4haEmYUqmQdTkJIA%2BwyKuK41OLcQXlfBPGf4ghmzuhLC8AjTpa%2FZ9X3YNIpdINv6zBc%2FjU5igqdzJbDHYKzyPg%3D%3D",
+  "費用": {
+    "營地費": 300,
+    "帳篷費": 800,
+    "停車費": 50,
+    "總數量": 34
+  },
+  "相關設施": {
+    "設備租借": true,
+    "飲用水": false,
+    "洗水槽": true,
+    "電源插座": true,
+    "衛浴設備": true,
+    "停車位": true,
+    "營地棧板": true,
+    "炊事帳": true
+  }
+}

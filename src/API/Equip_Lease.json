@@ -1,0 +1,64 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "brand": "Snow Peak",
+      "category": "帳篷",
+      "name": "Land Lock 別墅帳象牙白",
+      "model": "TP671IV",
+      "size": "W625cm*D405cm*H205cm",
+      "weight": "24.5kg",
+      "userNum": 6,
+      "origin_price": 51900,
+      "base_price": 2600,
+      "daily_price": 400,
+      "picture": "https://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/6145436/0/637231681562730000?v=1",
+      "inventory": 5
+    },
+    {
+      "id": 2,
+      "brand": "Snow Peak",
+      "category": "帳篷",
+      "name": "Amenity Dome Elfield 1990年復刻款",
+      "model": "AD-020",
+      "size": "W365cm*D425cm*H210cm",
+      "weight": "12kg",
+      "userNum": 6,
+      "origin_price": 54360,
+      "base_price": 2700,
+      "daily_price": 500,
+      "picture": "https://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/6357577/0/637260014498400000?v=1",
+      "inventory": 5
+    },
+    {
+      "id": 3,
+      "brand": "Snow Peak",
+      "category": "帳篷",
+      "name": "Amenity Dome 寢室帳 S",
+      "model": "SDE-002RH",
+      "size": "W355cm*D230cm*H120cm",
+      "weight": "5kg",
+      "userNum": 2,
+      "origin_price": 9280,
+      "base_price": 500,
+      "daily_price": 200,
+      "picture": "https://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/6106294/0/637309388859130000?v=1",
+      "inventory": 5
+    },
+    {
+      "id": 4,
+      "brand": "Snow Peak",
+      "category": "帳篷",
+      "name": "紗網客廳帳",
+      "model": "TP-920R",
+      "size": "W430cm*D400cm*H210cm",
+      "weight": "11.7kg",
+      "userNum": 4,
+      "origin_price": 23900,
+      "base_price": 1200,
+      "daily_price": 300,
+      "picture": "https://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/6357577/0/637260014498400000?v=1",
+      "inventory": 5
+    }
+  ]
+}
