@@ -19,8 +19,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in selectedProduct" :key="item[1]">
-          <th scope="row">{{index+1}}</th>
+        <tr v-for="(item, index, key) in selectedProduct" :key="key">
+          <th scope="row">{{index+1}}</th> <!-- 序號 -->
           <td>{{item[0]}}</td> <!-- 商品名稱 -->
           <td>{{item[1]}}</td> <!-- 商品型號 -->
           <td>{{item[2]}}</td> <!-- 基本租金 -->
@@ -28,7 +28,7 @@
           <td></td>
           <td>{{item[4]}}</td> <!-- 商品數量 -->
           <td></td>
-          <td><button class="btn btn-secondary" @click="delBtn">刪除</button></td>
+          <td><button class="btn btn-secondary" @click="delBtn(index)">刪除</button></td>
         </tr>
       </tbody>
     </table>
@@ -67,13 +67,18 @@ export default {
     goBilling() {
       this.$router.push('/Equip_Payment')
     },
-    delBtn() {
-      localStorage.removeItem('product')
+    delBtn(index) {
+      // console.log(index)
+      const arr = JSON.parse(localStorage.getItem('product')) // 先抓到localStorage product的所有資料
+      const delData = arr.splice(index, 1)
+      console.log(delData)
+      localStorage.setItem('product', JSON.stringify(arr))
+      location.reload()
     },
   },
   created() {
-    console.log(localStorage.getItem('selectedStore'))
-    console.log(JSON.parse(localStorage.getItem('product')))
+    // console.log(localStorage.getItem('selectedStore'))
+    // localStorage.clear() 刪除所有儲存在localStorage的資料
   },
 }
 </script>

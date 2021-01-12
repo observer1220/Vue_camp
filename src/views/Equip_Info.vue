@@ -18,7 +18,7 @@
       </div>
       <div class="right-side">
         <ul class="products">
-          <li v-for="item in filterData" :key="item.id">
+          <li v-for="(item,key) in filterData" :key="key">
             <router-link :to="{ path: '/Equip/' + item.id }">
               <img :src="item.picture" alt="">
               <strong>{{ item.name }}</strong>
