@@ -1,37 +1,29 @@
 <template>
   <div class="user-container">
-    <div class="account">
-      <input
-        type="name"
-        class="form-control"
-        v-model="user.name"
-        placeholder="請輸入您的姓名"
-      />
-      <input
-        type="email"
-        class="form-control"
-        v-model="user.email"
-        placeholder="請輸入您的Email"
-      />
-      <input
-        type="password"
-        class="form-control"
-        v-model="user.password"
-        placeholder="請輸入您的密碼"
-      />
-      <input
-        type="phone"
-        class="form-control"
-        v-model="user.phone"
-        placeholder="請輸入您的電話"
-        @keyup.enter="RegisterBtn"
-      />
-      <button @click="RegisterBtn">註冊</button>
-    </div>
+    <form class="account">
+      <div class="mb-3">
+        <input type="name" name="name" class="form-control" v-model="user.name" placeholder="中文姓名(取貨用)" />
+      </div>
+      <div class="mb-3">
+        <input type="email" name="email" class="form-control" v-model="user.email" placeholder="電子郵件" />
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <div class="mb-3">
+        <input type="password" class="form-control" v-model="user.password" placeholder="密碼" />
+        <div id="passwordHelp" class="form-text">
+          Must be 8-20 characters and not contain spaces, special characters or emoji.
+        </div>
+      </div>
+      <div class="mb-3">
+        <input type="tel" name="tel" class="form-control" v-model="user.tel" placeholder="行動電話" @keyup.enter="RegisterBtn" />
+      </div>
+      <button class="btn btn-primary" @click.prevent="RegisterBtn">註冊</button>
+    </form>
   </div>
 </template>
 
 <script>
+// import firebase from 'firebase'
 const url = 'https://fathomless-brushlands-42339.herokuapp.com/todo4'
 // /^ 開頭語法
 // \w+((-\w+)|(\.\w+))* 所有英文大小寫、數字、_可出現1次以上，符號-及.符號後方也適用同樣規則
@@ -46,7 +38,7 @@ export default {
         name: null,
         email: null,
         password: null,
-        phone: null,
+        tel: null,
       },
     }
   },
@@ -57,7 +49,7 @@ export default {
         name: this.user.name,
         email: this.user.email,
         password: this.user.password,
-        phone: this.user.phone,
+        tel: this.user.tel,
       }
       // 步驟1：確認name欄位非空值
       if (this.user.name === null) {
@@ -71,7 +63,7 @@ export default {
         // 步驟4：確認密碼欄位非空值
       } else if (this.user.password === null) {
         alert('請輸入您的密碼')
-      } else if (this.user.phone === null) {
+      } else if (this.user.tel === null) {
         alert('電話欄位不得為空值')
       } else {
         this.$http.post(`${url}`, saveData).then(() => {
@@ -80,6 +72,13 @@ export default {
           this.$router.push('/Login')
         })
       }
+      // RegisterRef.push({
+      //   id: null,
+      //   name: this.user.name,
+      //   email: this.user.email,
+      //   password: this.user.password,
+      //   tel: this.user.tel,
+      // })
     },
   },
 }

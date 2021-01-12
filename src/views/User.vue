@@ -1,6 +1,6 @@
 <template>
   <div class="user-container">
-    <div class="loginBar">
+    <div class="loginBar mb-3">
       <router-link to="/Register">帳號註冊</router-link> ／
       <router-link to="/Login">會員登入</router-link>
     </div>
@@ -29,7 +29,6 @@
   .account {
     display: flex;
     flex-direction: column;
-    align-items: center;
     .form-control {
       font-size: 18px;
       padding: 5px;

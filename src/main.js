@@ -4,9 +4,17 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import '@/assets/scss/all.scss'
+// import * as firebase from 'firebase'
 
-// import Swal from 'sweetalert2'
-// window.Swal = Swal
+// var firebaseConfig = {
+//   apiKey: 'AIzaSyAxWx7BXrXqFgxCzW7Txm34AwqxOHEoisk',
+//   authDomain: 'vuecamp.firebaseapp.com',
+//   databaseURL: 'https://vuecamp-default-rtdb.firebaseio.com/',
+//   projectId: 'vuecamp',
+//   storageBucket: 'vuecamp.appspot.com',
+//   messagingSenderId: '346918529760',
+// }
+// firebase.initializeApp(firebaseConfig)
 
 createApp(App).use(VueAxios, axios).use(router).mount('#app')
 
@@ -15,8 +23,13 @@ createApp(App).use(VueAxios, axios).use(router).mount('#app')
 const getloginStatus = localStorage.getItem('loginStatus')
 // 以JSON.parse解析資料，將字串轉成JSON陣列，只有將字串轉成陣列，才能提取loginStatus裡面的值(loginCheck)
 const parseloginStatus = JSON.parse(getloginStatus)
-// 用console.log確認getItem提取的內容為何?
-console.log(parseloginStatus)
+console.log(parseloginStatus) // 用console.log確認getItem提取的內容為何?
+// 登入時將會員中心隱藏，登出顯示；登出時反之
+if (parseloginStatus.loginCheck === true) {
+  document.querySelector('.login').style.display = 'none'
+} else {
+  document.querySelector('.logout').style.display = 'none'
+}
 
 router.beforeEach((to, from, next) => {
   // 動態變更網頁標籤
@@ -31,6 +44,7 @@ router.beforeEach((to, from, next) => {
       // 當parseloginStatus.loginCheck為false時，顯示alert('請登入帳號，以進入此頁面')
     } else {
       alert('請登入帳號，以進入此頁面')
+      this.$router.push('/Login')
     }
   } else {
     next()

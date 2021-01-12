@@ -1,21 +1,22 @@
 <template>
   <div class="user-container">
-    <div class="account">
-      <input
-        type="email"
-        class="form-control"
-        v-model="user.email"
-        placeholder="請輸入您的Email"
-      />
-      <input
-        type="password"
-        class="form-control"
-        v-model="user.password"
-        placeholder="請輸入您的密碼"
-        @keyup.enter="LoginBtn"
-      />
-      <button @click="LoginBtn">登入</button>
-    </div>
+    <form class="account">
+      <div class="mb-3">
+        <input type="email" class="form-control" v-model="user.email" placeholder="請輸入您的Email" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <div class="mb-3">
+        <input type="password" class="form-control" v-model="user.password" placeholder="請輸入您的密碼" @keyup.enter="LoginBtn" id="exampleInputPassword1" aria-describedby="passwordHelp">
+        <div id="passwordHelp" class="form-text">
+          Must be 8-20 characters and not contain spaces, special characters or emoji.
+        </div>
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">記住帳號</label>
+      </div>
+      <button class="btn btn-primary" @click.prevent="LoginBtn">登入</button>
+    </form>
   </div>
 </template>
 
@@ -53,9 +54,8 @@ export default {
           // 用localStorage將資料暫存在網頁，最好不要顯示帳號密碼，而是以後端給予的token作記號
           localStorage.setItem('loginStatus', JSON.stringify(loginStatus))
           alert('您已登入成功')
-          // 登入成功後，將畫面跳轉至設備租賃頁(未來將會是購物車頁面)
-          // this.$router.push('/Equip_Lease')
-          location.reload()
+          // 跳轉頁面並更新畫面 2021/1/8完成
+          location.replace('/Equip')
         } else {
           alert('查無此帳號')
         }
