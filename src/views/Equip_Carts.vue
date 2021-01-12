@@ -23,8 +23,8 @@
           <th scope="row">{{index+1}}</th> <!-- 序號 -->
           <td>{{item[0]}}</td> <!-- 商品名稱 -->
           <td>{{item[1]}}</td> <!-- 商品型號 -->
-          <td>{{item[2]}}</td> <!-- 基本租金 -->
-          <td>{{item[3]}}</td> <!-- 每日租金 -->
+          <td>${{item[2]}}</td> <!-- 基本租金 -->
+          <td>${{item[3]}}</td> <!-- 每日租金 -->
           <td></td>
           <td>{{item[4]}}</td> <!-- 商品數量 -->
           <td></td>
@@ -69,11 +69,10 @@ export default {
     },
     delBtn(index) {
       // console.log(index)
-      const arr = JSON.parse(localStorage.getItem('product')) // 先抓到localStorage product的所有資料
-      const delData = arr.splice(index, 1)
-      console.log(delData)
-      localStorage.setItem('product', JSON.stringify(arr))
-      location.reload()
+      const arr = JSON.parse(localStorage.getItem('product')) // 擷取localStorage中稱為product的key值，並將其儲存在變數arr
+      arr.splice(index, 1) // 以索引值(index)為目標，刪除該筆資料
+      localStorage.setItem('product', JSON.stringify(arr)) // 將處理過的變數arr塞回localStorage中的product
+      location.reload() // 重新整理頁面
     },
   },
   created() {

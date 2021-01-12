@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     goShopping() {
-      this.$router.push('/Equip')
+      this.$router.go(-1)
     },
     goBilling() {
       this.$router.push('/Equip_Carts')
