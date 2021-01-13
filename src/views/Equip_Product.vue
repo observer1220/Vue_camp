@@ -2,13 +2,15 @@
   <div class="equip-product-container">
     <ul>
       <li class="equip-product-info">
-        <img :src="picture" alt="" style="width:600px">
-        <div>
-          <p>品牌名稱：{{ brand }}</p>
-          <p>商品名稱：{{ title }}</p>
-          <p>商品編號：{{ model }}</p>
-          <p>基本租金：{{ base_price }}</p>
-          <p>每日租金：{{ daily_price }}</p>
+        <v-zoomer>
+          <img class="equip-product-pic" :src="picture" alt="" />
+        </v-zoomer>
+        <div class="equip-product-des">
+          <p>品牌：{{ brand }}</p>
+          <p>商品：{{ title }}</p>
+          <p>型號：{{ model }}</p>
+          <p>基本租金：${{ base_price }}元</p>
+          <p>每日租金：${{ daily_price }}元</p>
           <p>數量：
             <select name="" id="" v-model="quantity">
               <option value="1">1</option>
@@ -41,6 +43,18 @@ export default {
       base_price: null,
       daily_price: null,
       quantity: 1,
+
+      zoomerOptions: {
+        zoomFactor: 3,
+        pane: 'pane',
+        hoverDelay: 300,
+        namespace: 'zoomer-top',
+        move_by_click: false,
+        scroll_items: 7,
+        choosed_thumb_border_color: '#dd2c00',
+        scroller_position: 'top',
+        zoomer_pane_position: 'left',
+      },
     }
   },
   methods: {
@@ -97,6 +111,21 @@ export default {
   .equip-product-info {
     display: flex;
     align-items: center;
+    .equip-product-pic {
+      width: 450px;
+      height: 400px;
+      object-fit: contain;
+      margin-right: 50px;
+    }
+    .equip-product-des {
+      p {
+        font-size: 18px;
+      }
+      select {
+        width: 35px;
+        outline: none;
+      }
+    }
     .product-bar {
       button {
         margin-right: 5px;

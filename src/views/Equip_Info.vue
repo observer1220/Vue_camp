@@ -21,8 +21,8 @@
           <li v-for="(item,key) in filterData" :key="key">
             <router-link :to="{ path: '/Equip/' + item.id }">
               <img :src="item.picture" alt="">
-              <strong>{{ item.name }}</strong>
-              <p>{{ item.model }}</p>
+              <p>{{ item.name }}</p>
+              <p>型號：{{ item.model }}</p>
             </router-link>
           </li>
         </ul>
@@ -56,12 +56,13 @@ export default {
       currentCatalog: '帳篷',
       date: null,
       config: {
-        dateFormat: 'Y-m-d',
+        dateFormat: 'Y/m/d',
         mode: 'range',
         minDate: 'today',
         maxDate: new Date().fp_incr(60), // 預約限定60天
         locale: {
           firstDayOfWeek: 1, // 日曆從Monday開始跳
+          rangeSeparator: ' ~ ',
         },
       },
     }
@@ -77,8 +78,11 @@ export default {
       localStorage.setItem('selectedStore', this.currentStore)
     },
     selectedDate() {
-      console.log(this.date)
+      const daysInRange = document.getElementsByClassName('inRange')
+      const daysLengthTotal = daysInRange.length + 2
+      console.log(daysLengthTotal)
       localStorage.setItem('selectedDate', this.date)
+      localStorage.setItem('useDays', daysLengthTotal)
     },
     selectedCatalog() {
       const locations = new Set()
@@ -124,16 +128,20 @@ export default {
       font-size: 18px;
       padding: 2px;
       margin-bottom: 20px;
+      outline: none;
     }
     .flat-pickr {
       font-size: 18px;
       padding: 2px;
       margin-bottom: 20px;
+      width: 220px;
+      outline: none;
     }
     .catalog {
       font-size: 18px;
       padding: 2px;
       margin-bottom: 20px;
+      outline: none;
     }
   }
   .right-side {
@@ -150,24 +158,21 @@ export default {
           color: black;
           img {
             width: 300px;
-            height: 300px;
             object-fit: contain;
           }
         }
         &:hover {
           box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
           border-color: #eee;
-          transition: all 0.2s ease-in-out;
-          background: snow;
+          transition: all 0.5s ease-in-out;
         }
       }
     }
   }
 }
 .footer {
-  margin-top: 80px;
   background: #2c3e50;
-  padding-left: 10px;
+  padding-left: 30px;
   padding-bottom: 3px;
   h3 {
     color: whitesmoke;
