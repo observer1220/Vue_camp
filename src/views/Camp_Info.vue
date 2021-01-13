@@ -1,45 +1,23 @@
 <template>
   <div class="camp-info-container">
     <div class="map">
+      <select class="catalog" @change="selectedCatalog($event)" v-model="currentCatalog">
+        <option value="" disabled selected>請選擇區域</option>
+        <option :value="location" v-for="location in locations" :key="location">{{ location }}</option>
+      </select>
       <l-map :zoom="zoom" :center="[23, 120.4]">
         <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
         <l-marker :lat-lng="[22.6, 120.4]"></l-marker>
       </l-map>
     </div>
+
     <div class="camp-info">
-      <ul>
+      <ul v-for="(item, key) in filterData" :key="key">
         <li>
           <router-link to="">
-            <img src="@/assets/camp_info/1.尤巴士露營區.jpg" alt="">
-            <p>{{ data[0].name }}</p>
-            <p>{{ data[0].county }} {{ data[0].address }}</p>
-          </router-link>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <router-link to="">
-            <img src="@/assets/camp_info/2.營墅風晴露營區.png" alt="">
-            <p>{{ data[1].name }}</p>
-            <p>{{ data[1].county }} {{ data[1].address }}</p>
-          </router-link>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <router-link to="">
-            <img src="@/assets/camp_info/3.白蘭時光.png" alt="">
-            <p>{{ data[2].name }}</p>
-            <p>{{ data[2].county }} {{ data[2].address }}</p>
-          </router-link>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <router-link to="">
-            <img src="@/assets/camp_info/4.庫巴露營區.jpg" alt="">
-            <p>{{ data[3].name }}</p>
-            <p>{{ data[3].county }} {{ data[3].address }}</p>
+            <img :src="item.picture" alt="">
+            <p>{{ item.name }}</p>
+            <p>{{ item.county }} {{ item.address }}</p>
           </router-link>
         </li>
       </ul>
@@ -59,51 +37,40 @@ export default {
   data() {
     return {
       zoom: 8,
-      data: [
-        {
-          id: 1,
-          name: '尤巴士露營區',
-          county: '新竹縣',
-          address: '五峰鄉白蘭部落桃山村',
-          altitude: '1050',
-          tel: '04-2422-1798',
-          lng: 121.08754,
-          lat: 24.58141,
-        },
-        {
-          id: 2,
-          name: '營墅風晴露營區',
-          county: '新竹縣',
-          address: '關西鎮錦山里9鄰96號',
-          altitude: '240',
-          tel: '04-2422-1798',
-          lng: 121.24913148957812,
-          lat: 24.77845506488546,
-        },
-        {
-          id: 3,
-          name: '白蘭時光',
-          county: '新竹縣',
-          address: '五峰鄉白蘭部落',
-          altitude: '1050',
-          tel: '04-2422-1798',
-          lng: 121.08653274031833,
-          lat: 24.579732873462497,
-        },
-        {
-          id: 4,
-          name: '庫巴露營區',
-          county: '桃園縣',
-          address: '復興鄉霞雲里庫志31之3號',
-          altitude: '520',
-          tel: '04-2422-1798',
-          lng: 121.39864315219475,
-          lat: 24.807914419279225,
-        },
-      ],
+      items: [],
+      locations: [],
+      currentCatalog: '高雄市',
     }
   },
-  methods: {},
+  methods: {
+    selectedCatalog() {
+      const locations = new Set()
+      this.items.forEach((item) => {
+        locations.add(item.county)
+      })
+      this.locations = Array.from(locations)
+    },
+  },
+  computed: {
+    filterData() {
+      let filterData = []
+      if (this.currentCatalog !== '') {
+        filterData = this.items.filter((item) => {
+          return item.county === this.currentCatalog
+        })
+      }
+      return filterData
+    },
+  },
+  created() {
+    const url =
+      'https://firebasestorage.googleapis.com/v0/b/vuecamp.appspot.com/o/Camp_Info.json?alt=media&token=94d72b72-75d2-498a-b973-b11fb0c0a434'
+    this.$http.get(url).then((res) => {
+      this.items = res.data.data
+      console.log(res.data.data)
+      this.selectedCatalog()
+    })
+  },
 }
 </script>
 <style lang="scss">
