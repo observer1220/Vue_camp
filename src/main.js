@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueZoomer from 'vue-zoomer'
+
 import '@/assets/scss/all.scss'
 // import * as firebase from 'firebase'
 
@@ -16,7 +18,7 @@ import '@/assets/scss/all.scss'
 // }
 // firebase.initializeApp(firebaseConfig)
 
-createApp(App).use(VueAxios, axios).use(router).mount('#app')
+createApp(App).use(VueAxios, axios).use(router).use(VueZoomer).mount('#app')
 
 // localStorage.setItem寫在Login.vue頁面，localStorage.getItem寫在main.js頁面(全域)
 // 以localStorage.getItem('key')取得使用者登入資料(這裡取得的資料為一組字串，沒辦法直接使用)

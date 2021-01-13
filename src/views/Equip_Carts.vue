@@ -2,7 +2,7 @@
   <div class="carts-container">
     <p>取貨方式：<input type="text" disabled v-model="selectedStore" /></p>
     <p>
-      租賃日期：<input type="text" disabled v-model="selectedDate" style="width: 200px" />
+      租賃日期：<input type="text" disabled v-model="selectedDate" style="width: 300px" />
     </p>
     <table class="table">
       <thead>
@@ -25,24 +25,21 @@
           <td>{{item[1]}}</td> <!-- 商品型號 -->
           <td>${{item[2]}}</td> <!-- 基本租金 -->
           <td>${{item[3]}}</td> <!-- 每日租金 -->
-          <td></td>
+          <td>{{useDays}}</td> <!-- 天數 -->
           <td>{{item[4]}}</td> <!-- 商品數量 -->
-          <td></td>
+          <td>${{item[2]+((item[3]*useDays)*item[4])}}</td> <!-- 小計 -->
           <td><button class="btn btn-secondary" @click="delBtn(index)">刪除</button></td>
         </tr>
       </tbody>
     </table>
-    <div class="coupon">
-      <input type="text" placeholder="請輸入優惠券代碼" style="height:38px" />
-      <input type="button" class="btn btn-primary" value="使用" />
-    </div>
-    <div class="sum">
-      <span>總計(折扣前)：</span>
-      <span></span>
-    </div>
-    <div class="discount">
-      <span>總計(折扣後)：</span>
-      <span></span>
+    <div class="valuation">
+      <div class="coupon">
+        <input type="button" class="btn btn-primary" value="使用" />
+        <input type="text" class="input-group-text" placeholder="請輸入優惠券代碼" />
+      </div>
+      <div class="sum">
+        <span>總計： </span>
+      </div>
     </div>
     <div class="confirm">
       <input type="button" class="btn btn-danger" value="繼續購物" @click="goShopping" />
@@ -58,6 +55,7 @@ export default {
       selectedStore: localStorage.getItem('selectedStore'),
       selectedDate: localStorage.getItem('selectedDate'),
       selectedProduct: JSON.parse(localStorage.getItem('product')),
+      useDays: localStorage.getItem('useDays'),
     }
   },
   methods: {
@@ -100,20 +98,18 @@ export default {
       }
     }
   }
-  .coupon {
-    display: flex;
-    // justify-content: flex-end;
-    align-items: center;
-  }
-  .sum {
-    display: flex;
-    // justify-content: space-around;
-    margin-right: 80px;
-  }
-  .discount {
-    display: flex;
-    // justify-content: flex-end;
-    margin-right: 80px;
+  .valuation {
+    .coupon {
+      display: flex;
+      align-items: center;
+      outline: none;
+    }
+    .sum {
+      margin-top: 10px;
+      padding-left: 8px;
+      font-size: 20px;
+      font-weight: 900;
+    }
   }
   .confirm {
     display: flex;
