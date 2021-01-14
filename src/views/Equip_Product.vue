@@ -65,20 +65,25 @@ export default {
       this.$router.push('/Equip_Carts')
     },
     addBtn() {
-      // 用JSON.parse撈product的內容，是為了將productHistory設定為陣列
-      const productHistory = JSON.parse(localStorage.getItem('product')) || []
-      // 將productHistory設定為陣列，是因為push方法只能把字串或數值推到陣列裡
-      productHistory.push([
-        this.title,
-        this.model,
-        this.base_price,
-        this.daily_price,
-        this.quantity,
-      ])
-      // 用JSON.stringify把值傳到localStorage，是因productHistory原本是一組陣列
-      // localStorage只能接收字串
-      localStorage.setItem('product', JSON.stringify(productHistory))
-      alert('已加入購物車')
+      const loginStatus = JSON.parse(localStorage.getItem('loginStatus'))
+      if (loginStatus.loginCheck === false) {
+        alert('請登入帳號')
+      } else {
+        // 用JSON.parse撈product的內容，是為了將productHistory設定為陣列
+        const productHistory = JSON.parse(localStorage.getItem('product')) || []
+        // 將productHistory設定為陣列，是因為push方法只能把字串或數值推到陣列裡
+        productHistory.push([
+          this.title,
+          this.model,
+          this.base_price,
+          this.daily_price,
+          this.quantity,
+        ])
+        // 用JSON.stringify把值傳到localStorage，是因productHistory原本是一組陣列
+        // localStorage只能接收字串
+        localStorage.setItem('product', JSON.stringify(productHistory))
+        alert('已加入購物車')
+      }
     },
   },
   created() {
