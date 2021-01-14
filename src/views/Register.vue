@@ -23,8 +23,8 @@
 </template>
 
 <script>
-// import firebase from 'firebase'
-const url = 'https://fathomless-brushlands-42339.herokuapp.com/todo4'
+// const url = 'https://fathomless-brushlands-42339.herokuapp.com/todo4'
+import qs from 'qs'
 // /^ 開頭語法
 // \w+((-\w+)|(\.\w+))* 所有英文大小寫、數字、_可出現1次以上，符號-及.符號後方也適用同樣規則
 // @[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)* @符號後方可所有英文大小寫、數字可出現1次以上 並可使用符號-及.做連接詞，符號後方也適用同樣規則
@@ -44,12 +44,20 @@ export default {
   },
   methods: {
     RegisterBtn() {
-      const saveData = {
-        id: null,
+      const saveData = qs.stringify({
         name: this.user.name,
-        email: this.user.email,
         password: this.user.password,
         tel: this.user.tel,
+        email: this.user.email,
+      })
+      var config = {
+        method: 'post',
+        url: 'https://gocamping.rocket-coding.com/Register/Guest',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: '__cfduid=db444a026ebafd355fb3138f06f54e2701610528085',
+        },
+        data: saveData,
       }
       // 步驟1：確認name欄位非空值
       if (this.user.name === null) {
@@ -66,20 +74,22 @@ export default {
       } else if (this.user.tel === null) {
         alert('電話欄位不得為空值')
       } else {
-        this.$http.post(`${url}`, saveData).then(() => {
-          alert('註冊成功')
-          // 註冊成功後，將畫面跳轉至登入頁面
-          this.$router.push('/Login')
-        })
+        this.$http(config)
+          .then((res) => {
+            alert('註冊成功')
+            console.log(saveData)
+            console.log(res)
+            // 註冊成功後，將畫面跳轉至登入頁面
+            this.$router.push('/Login')
+          })
+          .catch(() => {
+            alert('註冊失敗')
+          })
       }
-      // RegisterRef.push({
-      //   id: null,
-      //   name: this.user.name,
-      //   email: this.user.email,
-      //   password: this.user.password,
-      //   tel: this.user.tel,
-      // })
     },
+  },
+  created() {
+    // console.log(qs)
   },
 }
 </script>

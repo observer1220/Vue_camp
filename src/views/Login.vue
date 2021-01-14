@@ -21,7 +21,8 @@
 </template>
 
 <script>
-const url = 'https://fathomless-brushlands-42339.herokuapp.com/todo4'
+// const url = 'https://fathomless-brushlands-42339.herokuapp.com/todo4'
+import qs from 'qs'
 export default {
   data() {
     return {
@@ -35,26 +36,31 @@ export default {
   },
   methods: {
     LoginBtn() {
-      const that = this
       // 登入前狀態
-      const loginStatus = {
+      const loginStatus = qs.stringify({
         loginCheck: false,
         loginEmail: null,
+      })
+      var config = {
+        method: 'get',
+        url: 'https://gocamping.rocket-coding.com/Guest/Login?Id=1',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: '__cfduid=db444a026ebafd355fb3138f06f54e2701610528085',
+        },
+        data: loginStatus,
       }
-      this.$http.get(url).then((res) => {
-        const checkAccount = res.data.find(function (i) {
-          return (
-            i.email === that.user.email && i.password === that.user.password
-          )
-        })
+      this.$http(config).then((res) => {
+        console.log(res)
         // 當確認使用者email與password後，將使用者登入狀態(loginCheck)與使用者名稱(loginName)儲存在localStorage
-        if (checkAccount) {
-          loginStatus.loginCheck = true
-          loginStatus.loginEmail = that.user.email
+        if (res.data.Message === '會員登入成功') {
+          const loginStatus = {
+            loginCheck: true,
+            loginEmail: this.user.email,
+          }
           // 用localStorage將資料暫存在網頁，最好不要顯示帳號密碼，而是以後端給予的token作記號
           localStorage.setItem('loginStatus', JSON.stringify(loginStatus))
           alert('您已登入成功')
-          // 跳轉頁面並更新畫面 2021/1/8完成
           location.replace('/Equip')
         } else {
           alert('查無此帳號')
@@ -62,6 +68,5 @@ export default {
       })
     },
   },
-  created() {},
 }
 </script>

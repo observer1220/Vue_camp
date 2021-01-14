@@ -27,7 +27,7 @@
           <td>${{item[3]}}</td> <!-- 每日租金 -->
           <td>{{useDays}}</td> <!-- 天數 -->
           <td>{{item[4]}}</td> <!-- 商品數量 -->
-          <td>${{item[2]+((item[3]*useDays)*item[4])}}</td> <!-- 小計 -->
+          <td>${{(item[2] * item[4]) + (item[3] * useDays * item[4])}}</td> <!-- 小計：(基本租金*數量)+(每日租金*天數*數量) -->
           <td><button class="btn btn-secondary" @click="delBtn(index)">刪除</button></td>
         </tr>
       </tbody>
@@ -38,7 +38,7 @@
         <input type="text" class="input-group-text" placeholder="請輸入優惠券代碼" />
       </div>
       <div class="sum">
-        <span>總計： </span>
+        <span>總計：${{ total }} </span>
       </div>
     </div>
     <div class="confirm">
@@ -73,8 +73,19 @@ export default {
       location.reload() // 重新整理頁面
     },
   },
+  computed: {
+    // 總計
+    total() {
+      const arr = JSON.parse(localStorage.getItem('product'))
+      const useDays = localStorage.getItem('useDays')
+      var sumb = 0
+      arr.forEach((item) => {
+        sumb += item[2] * item[4] + item[3] * useDays * item[4]
+      })
+      return sumb
+    },
+  },
   created() {
-    // console.log(localStorage.getItem('selectedStore'))
     // localStorage.clear() 刪除所有儲存在localStorage的資料
   },
 }
