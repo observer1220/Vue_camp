@@ -17,6 +17,9 @@
         </select>
       </div>
       <div class="right-side">
+        <div class="load">
+          <img src="https://cliply.co/wp-content/uploads/2020/02/372002600_MOUNTAINS_400px.gif" alt="">
+        </div>
         <ul class="products">
           <li v-for="(item,key) in filterData" :key="key">
             <router-link :to="{ path: '/Equip/' + item.id }">
@@ -62,7 +65,7 @@ export default {
         maxDate: new Date().fp_incr(60), // 預約限定60天
         locale: {
           firstDayOfWeek: 1, // 日曆從Monday開始跳
-          rangeSeparator: ' ~ ',
+          rangeSeparator: '~',
         },
       },
     }
@@ -78,8 +81,8 @@ export default {
       localStorage.setItem('selectedStore', this.currentStore)
     },
     selectedDate() {
-      const daysInRange = document.getElementsByClassName('inRange')
-      const daysLengthTotal = daysInRange.length + 2
+      const daysInRange = document.getElementsByClassName('inRange') // 選取class名稱為inRange的項目
+      const daysLengthTotal = daysInRange.length + 2 // +2是因為startRange跟endRange沒有被選到
       console.log(daysLengthTotal)
       localStorage.setItem('selectedDate', this.date)
       localStorage.setItem('useDays', daysLengthTotal)
@@ -107,6 +110,8 @@ export default {
     const url =
       'https://firebasestorage.googleapis.com/v0/b/vuecamp.appspot.com/o/Equip_Lease.json?alt=media&token=5eb3db57-78ea-40cf-b424-8ae10e296b36'
     this.$http.get(url).then((res) => {
+      const load = document.querySelector('.load')
+      load.innerHTML = ''
       this.items = res.data.data
       console.log(res.data.data)
       this.selectedCatalog()

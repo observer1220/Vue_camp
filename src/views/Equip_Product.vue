@@ -2,7 +2,11 @@
   <div class="equip-product-container">
     <ul>
       <li class="equip-product-info">
+
         <v-zoomer>
+          <div class="load">
+            <img src="https://magossystems.com/MagosWordpress/wp-content/themes/Magos/images/loading_slider.gif" alt="">
+          </div>
           <img class="equip-product-pic" :src="picture" alt="" />
         </v-zoomer>
         <div class="equip-product-des">
@@ -43,18 +47,6 @@ export default {
       base_price: null,
       daily_price: null,
       quantity: 1,
-
-      zoomerOptions: {
-        zoomFactor: 3,
-        pane: 'pane',
-        hoverDelay: 300,
-        namespace: 'zoomer-top',
-        move_by_click: false,
-        scroll_items: 7,
-        choosed_thumb_border_color: '#dd2c00',
-        scroller_position: 'top',
-        zoomer_pane_position: 'left',
-      },
     }
   },
   methods: {
@@ -92,6 +84,8 @@ export default {
     const that = this
     const num = this.$route.params.id
     this.$http.get(url).then((res) => {
+      const load = document.querySelector('.load')
+      load.innerHTML = ''
       this.items = res.data.data
       this.items.forEach(function (item) {
         if (num === item.id) {

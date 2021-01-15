@@ -4,8 +4,8 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueZoomer from 'vue-zoomer'
-
 import '@/assets/scss/all.scss'
+
 // import * as firebase from 'firebase'
 
 // var firebaseConfig = {

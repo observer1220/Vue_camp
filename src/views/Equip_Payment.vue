@@ -1,6 +1,6 @@
 <template>
   <div class="row justify-content-center">
-    <form class="col-4 p-5">
+    <form class="col-5 p-5">
       <h3>取貨人資料：</h3>
       <div class="form-group mb-1">
         <label for="username"></label>
