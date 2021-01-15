@@ -2,7 +2,7 @@
   <div class="carts-container">
     <p>取貨方式：<input type="text" disabled v-model="selectedStore" /></p>
     <p>
-      租賃日期：<input type="text" disabled v-model="selectedDate" style="width: 300px" />
+      租賃日期：<input type="text" disabled v-model="selectedDate" />
     </p>
     <table class="table">
       <thead>
@@ -74,15 +74,14 @@ export default {
     },
   },
   computed: {
-    // 總計
     total() {
       const arr = JSON.parse(localStorage.getItem('product'))
       const useDays = localStorage.getItem('useDays')
-      var sumb = 0
+      var sum = 0
       arr.forEach((item) => {
-        sumb += item[2] * item[4] + item[3] * useDays * item[4]
+        sum += item[2] * item[4] + item[3] * useDays * item[4]
       })
-      return sumb
+      return sum
     },
   },
   created() {
