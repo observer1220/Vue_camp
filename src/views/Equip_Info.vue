@@ -145,7 +145,6 @@ export default {
     .catalog {
       font-size: 18px;
       padding: 2px;
-      margin-bottom: 20px;
       outline: none;
     }
   }
@@ -154,6 +153,8 @@ export default {
     .products {
       display: flex;
       flex-wrap: wrap;
+      height: 355px;
+      overflow-y: auto;
       li {
         padding: 5px;
         a {
