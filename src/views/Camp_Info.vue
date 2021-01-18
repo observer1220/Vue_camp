@@ -5,9 +5,9 @@
         <option value="" disabled selected>請選擇區域</option>
         <option :value="location" v-for="location in locations" :key="location">{{ location }}</option>
       </select>
-      <l-map :zoom="zoom" :center="[23, 120.4]">
+      <l-map v-for="(item, key) in filterData" :key="key" :zoom="zoom" :center="[item.lat , item.lng]">
         <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
-        <l-marker :lat-lng="[22.6, 120.4]"></l-marker>
+        <l-marker :lat-lng="[item.lat , item.lng]"></l-marker>
       </l-map>
     </div>
 
@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      zoom: 8,
+      zoom: 7,
       items: [],
       locations: [],
       currentCatalog: '高雄市',
@@ -64,10 +64,9 @@ export default {
   },
   created() {
     const url =
-      'https://firebasestorage.googleapis.com/v0/b/vuecamp.appspot.com/o/Camp_Info.json?alt=media&token=94d72b72-75d2-498a-b973-b11fb0c0a434'
+      'https://firebasestorage.googleapis.com/v0/b/vuecamp.appspot.com/o/Camp_Info.json?alt=media&token=1bf7f582-8b8c-4ad7-b979-0b9f4997cc91'
     this.$http.get(url).then((res) => {
       this.items = res.data.data
-      console.log(res.data.data)
       this.selectedCatalog()
     })
   },
