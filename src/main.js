@@ -5,7 +5,6 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueZoomer from 'vue-zoomer'
 import '@/assets/scss/all.scss'
-
 // import * as firebase from 'firebase'
 
 // var firebaseConfig = {
@@ -25,7 +24,6 @@ createApp(App).use(VueAxios, axios).use(router).use(VueZoomer).mount('#app')
 const getloginStatus = localStorage.getItem('loginStatus')
 // 以JSON.parse解析資料，將字串轉成JSON陣列，只有將字串轉成陣列，才能提取loginStatus裡面的值(loginCheck)
 const parseloginStatus = JSON.parse(getloginStatus)
-console.log(parseloginStatus) // 用console.log確認getItem提取的內容為何?
 // 登入時將會員中心隱藏，登出顯示；登出時反之
 if (parseloginStatus.loginCheck === true) {
   document.querySelector('.login').style.display = 'none'

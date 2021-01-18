@@ -21,7 +21,6 @@
 </template>
 
 <script>
-// const url = 'https://fathomless-brushlands-42339.herokuapp.com/todo4'
 import qs from 'qs'
 export default {
   data() {
@@ -43,6 +42,7 @@ export default {
       })
       var config = {
         method: 'get',
+        // url = 'https://fathomless-brushlands-42339.herokuapp.com/todo4'
         url: 'https://gocamping.rocket-coding.com/Guest/Login?Id=1',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -50,22 +50,26 @@ export default {
         },
         data: loginStatus,
       }
-      this.$http(config).then((res) => {
-        console.log(res)
-        // 當確認使用者email與password後，將使用者登入狀態(loginCheck)與使用者名稱(loginName)儲存在localStorage
-        if (res.data.Message === '會員登入成功') {
-          const loginStatus = {
-            loginCheck: true,
-            loginEmail: this.user.email,
+      this.$http(config)
+        .then((res) => {
+          console.log(res)
+          // 當確認使用者email與password後，將使用者登入狀態(loginCheck)與使用者名稱(loginName)儲存在localStorage
+          if (res.data.Message === '會員登入成功') {
+            const loginStatus = {
+              loginCheck: true,
+              loginEmail: this.user.email,
+            }
+            // 用localStorage將資料暫存在網頁，最好不要顯示帳號密碼，而是以後端給予的token作記號
+            localStorage.setItem('loginStatus', JSON.stringify(loginStatus))
+            alert('您已登入成功')
+            location.replace('/Equip')
+          } else {
+            alert('查無此帳號')
           }
-          // 用localStorage將資料暫存在網頁，最好不要顯示帳號密碼，而是以後端給予的token作記號
-          localStorage.setItem('loginStatus', JSON.stringify(loginStatus))
-          alert('您已登入成功')
-          location.replace('/Equip')
-        } else {
-          alert('查無此帳號')
-        }
-      })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
   },
 }
