@@ -1,26 +1,29 @@
 <template>
   <div class="camp-info-container">
-    <div class="map">
+    <div class="camp-info">
       <select class="catalog" @change="selectedCatalog($event)" v-model="currentCatalog">
         <option value="" disabled selected>請選擇區域</option>
         <option :value="location" v-for="location in locations" :key="location">{{ location }}</option>
       </select>
-      <l-map v-for="(item, key) in filterData" :key="key" :zoom="zoom" :center="[item.lat , item.lng]">
-        <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
-        <l-marker :lat-lng="[item.lat , item.lng]"></l-marker>
-      </l-map>
+      <div>
+        <ul v-for="(item, key) in filterData" :key="key">
+          <li>
+            <router-link to="">
+              <img :src="item.picture" alt="">
+              <p>{{ item.name }}</p>
+              <p>{{ item.county }} {{ item.address }}</p>
+            </router-link>
+          </li>
+        </ul>
+      </div>
     </div>
-
-    <div class="camp-info">
-      <ul v-for="(item, key) in filterData" :key="key">
-        <li>
-          <router-link to="">
-            <img :src="item.picture" alt="">
-            <p>{{ item.name }}</p>
-            <p>{{ item.county }} {{ item.address }}</p>
-          </router-link>
-        </li>
-      </ul>
+    <div class="map">
+      <div style="height: 75vh; width: 50vw;">
+        <l-map v-for="(item, key) in filterData" :key="key" :zoom="zoom" :center="[item.lat , item.lng]">
+          <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
+          <l-marker v-for="(item, key) in filterData" :key="key" :lat-lng="[item.lat , item.lng]"></l-marker>
+        </l-map>
+      </div>
     </div>
   </div>
 
@@ -78,19 +81,21 @@ export default {
   margin-top: 30px;
   width: 100%;
   .map {
-    height: 450px;
     width: 50%;
     margin-right: 10px;
   }
   .camp-info {
     display: flex;
+    flex-direction: column;
+    width:50%;
+    div{
+      display: flex;
     flex-wrap: wrap;
     overflow-y: auto;
-    width: 50%;
     ul {
       padding: 0;
       li {
-        margin-right: 5px;
+        margin-right: 10px;
         a {
           text-decoration: none;
           color: black;
@@ -112,6 +117,8 @@ export default {
         }
       }
     }
+    }
+
   }
 }
 </style>
