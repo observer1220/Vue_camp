@@ -25,9 +25,7 @@ import qs from 'qs'
 export default {
   data() {
     return {
-      // 使用者輸入的資訊
       user: {
-        name: null,
         email: null,
         password: null,
       },
@@ -35,15 +33,13 @@ export default {
   },
   methods: {
     LoginBtn() {
-      // 登入前狀態
       const loginStatus = qs.stringify({
-        loginCheck: false,
-        loginEmail: null,
+        email: this.user.email,
+        password: this.user.password,
       })
       var config = {
-        method: 'get',
-        // url = 'https://fathomless-brushlands-42339.herokuapp.com/todo4'
-        url: 'https://gocamping.rocket-coding.com/Guest/Login?Id=1',
+        method: 'post',
+        url: 'https://gocamping.rocket-coding.com/Guest/LoginSalt',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           Authorization: '__cfduid=db444a026ebafd355fb3138f06f54e2701610528085',
@@ -54,10 +50,10 @@ export default {
         .then((res) => {
           console.log(res)
           // 當確認使用者email與password後，將使用者登入狀態(loginCheck)與使用者名稱(loginName)儲存在localStorage
-          if (res.data.Message === '會員登入成功') {
+          if (res.data.status === '會員驗證登入成功') {
             const loginStatus = {
               loginCheck: true,
-              loginEmail: this.user.email,
+              email: this.user.email,
             }
             // 用localStorage將資料暫存在網頁，最好不要顯示帳號密碼，而是以後端給予的token作記號
             localStorage.setItem('loginStatus', JSON.stringify(loginStatus))

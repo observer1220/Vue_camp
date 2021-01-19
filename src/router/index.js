@@ -11,7 +11,9 @@ import EquipPayment from '../views/Equip_Payment.vue' // 選擇付款方式頁(�
 import EquipCompleted from '../views/Equip_Completed.vue'// 訂單完成頁(需驗證)
 
 // 營地資訊
+import Camp from '../views/Camp.vue'
 import CampInfo from '../views/Camp_Info.vue' // 營地資訊-首頁
+import CampProduct from '../views/Camp_Product.vue' // 營地資訊-產品頁
 
 // 會員中心
 import User from '../views/User.vue' // 會員中心-首頁
@@ -20,8 +22,6 @@ import Login from '../views/Login' // 會員中心-登入頁
 
 // 荒野探索-網站後台
 import Management from '../views/Management.vue' // 顧客後臺頁
-
-// import Articles from '../views/Articles.vue'
 
 const routes = [
   {
@@ -73,11 +73,21 @@ const routes = [
     },
   },
   {
-    path: '/Camp_Info',
-    component: CampInfo,
-    meta: {
-      title: '營地資訊',
-    },
+    path: '/Camp',
+    component: Camp,
+    children: [
+      {
+        path: '',
+        component: CampInfo,
+        meta: {
+          title: '營地資訊',
+        },
+      },
+      {
+        path: ':id',
+        component: CampProduct,
+      },
+    ],
   },
   {
     path: '/Management',
