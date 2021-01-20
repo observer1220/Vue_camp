@@ -53,7 +53,7 @@ const routes = [
     component: EquipCarts,
     meta: {
       title: '購物車',
-      // requiresAuth: true,
+      requiresAuth: true,
     },
   },
   {
@@ -61,7 +61,7 @@ const routes = [
     component: EquipPayment,
     meta: {
       title: '選擇付款方式',
-      // requiresAuth: true,
+      requiresAuth: true,
     },
   },
   {
@@ -69,7 +69,7 @@ const routes = [
     component: EquipCompleted,
     meta: {
       title: '訂單完成',
-      // requiresAuth: true,
+      requiresAuth: true,
     },
   },
   {
