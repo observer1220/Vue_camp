@@ -42,8 +42,8 @@
       </div>
     </div>
     <div class="confirm">
-      <input type="button" class="btn btn-danger" value="繼續購物" @click="goShopping" />
-      <input type="button" class="btn btn-primary" value="前往結帳" @click="goBilling" />
+      <input type="button" class="btn btn-danger" value="繼續購物" @click="ShopBtn" />
+      <input type="button" class="btn btn-primary" value="前往結帳" @click="BillBtn" />
     </div>
   </div>
 </template>
@@ -59,10 +59,10 @@ export default {
     }
   },
   methods: {
-    goShopping() {
+    ShopBtn() {
       this.$router.push('/Equip')
     },
-    goBilling() {
+    BillBtn() {
       this.$router.push('/Equip_Payment')
     },
     delBtn(index) {
