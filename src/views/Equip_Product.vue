@@ -79,16 +79,23 @@ export default {
     },
   },
   created() {
-    const url =
-      'https://firebasestorage.googleapis.com/v0/b/vuecamp.appspot.com/o/Equip_Lease.json?alt=media&token=5eb3db57-78ea-40cf-b424-8ae10e296b36'
+    // const url = 'https://firebasestorage.googleapis.com/v0/b/vuecamp.appspot.com/o/Equip_Lease.json?alt=media&token=5eb3db57-78ea-40cf-b424-8ae10e296b36'
     const that = this
     const num = this.$route.params.id
-    this.$http.get(url).then((res) => {
+    var config = {
+      method: 'get',
+      url: 'https://gocamping.rocket-coding.com/Products/List',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: '__cfduid=db444a026ebafd355fb3138f06f54e2701610528085',
+      },
+    }
+    this.$http(config).then((res) => {
       const load = document.querySelector('.load')
       load.innerHTML = ''
-      this.items = res.data.data
+      this.items = res.data
       this.items.forEach(function (item) {
-        if (num === item.id) {
+        if (num === `${item.product_id}`) {
           that.picture = item.picture
           that.brand = item.brand
           that.title = item.name

@@ -22,7 +22,7 @@
         </div>
         <ul class="products">
           <li v-for="(item,key) in filterData" :key="key">
-            <router-link :to="{ path: '/Equip/' + item.id }">
+            <router-link :to="{ path: '/Equip/' + item.product_id }">
               <img :src="item.picture" alt="">
               <p>{{ item.name }}</p>
               <p>型號：{{ item.model }}</p>
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+// import qs from 'qs'
 import flatPickr from 'vue-flatpickr-component'
 import 'flatpickr/dist/flatpickr.css'
 export default {
@@ -107,13 +108,20 @@ export default {
     },
   },
   created() {
-    const url =
-      'https://firebasestorage.googleapis.com/v0/b/vuecamp.appspot.com/o/Equip_Lease.json?alt=media&token=5eb3db57-78ea-40cf-b424-8ae10e296b36'
-    this.$http.get(url).then((res) => {
+    // const url = 'https://firebasestorage.googleapis.com/v0/b/vuecamp.appspot.com/o/Equip_Lease.json?alt=media&token=5eb3db57-78ea-40cf-b424-8ae10e296b36'
+    var config = {
+      method: 'get',
+      url: 'https://gocamping.rocket-coding.com/Products/List',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: '__cfduid=db444a026ebafd355fb3138f06f54e2701610528085',
+      },
+    }
+    this.$http(config).then((res) => {
       const load = document.querySelector('.load')
       load.innerHTML = ''
-      this.items = res.data.data
-      console.log(res.data.data)
+      this.items = res.data
+      console.log(res.data)
       this.selectedCatalog()
     })
   },
@@ -153,7 +161,7 @@ export default {
     .products {
       display: flex;
       flex-wrap: wrap;
-      height: 355px;
+      height: 420px;
       overflow-y: auto;
       li {
         padding: 5px;
