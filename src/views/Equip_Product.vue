@@ -27,7 +27,7 @@
           <div class="product-bar">
             <button class="btn btn-danger" @click="goShopping">繼續購物</button>
             <button class="btn btn-primary" @click="addBtn()">加入購物車</button>
-            <button class="btn btn-danger" @click="goBilling">前往結帳</button>
+            <button class="btn btn-danger" @click="BillBtn">前往結帳</button>
           </div>
         </div>
       </li>
@@ -53,7 +53,7 @@ export default {
     goShopping() {
       this.$router.go(-1)
     },
-    goBilling() {
+    BillBtn() {
       this.$router.push('/Equip_Carts')
     },
     addBtn() {
@@ -71,10 +71,10 @@ export default {
           this.daily_price,
           this.quantity,
         ])
-        // 用JSON.stringify把值傳到localStorage，是因productHistory原本是一組陣列
-        // localStorage只能接收字串
+        // 用JSON.stringify把值傳到localStorage，是因productHistory原本是一組陣列，而 localStorage只能接收字串
         localStorage.setItem('product', JSON.stringify(productHistory))
         alert('已加入購物車')
+        location.reload()
       }
     },
   },

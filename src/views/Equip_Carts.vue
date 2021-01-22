@@ -1,9 +1,7 @@
 <template>
   <div class="carts-container">
     <p>取貨方式：<input type="text" disabled v-model="selectedStore" /></p>
-    <p>
-      租賃日期：<input type="text" disabled v-model="selectedDate" />
-    </p>
+    <p>租賃日期：<input type="text" disabled v-model="selectedDate" /></p>
     <table class="table">
       <thead>
         <tr>
@@ -20,14 +18,14 @@
       </thead>
       <tbody>
         <tr v-for="(item, index, key) in selectedProduct" :key="key">
-          <th scope="row">{{index+1}}</th> <!-- 序號 -->
-          <td>{{item[0]}}</td> <!-- 商品名稱 -->
+          <th scope="row">{{index+1}}</th> <!-- 項目序號 -->
+          <td>{{item[0]}}</td><!-- 商品名稱 -->
           <td>{{item[1]}}</td> <!-- 商品型號 -->
-          <td>${{item[2]}}</td> <!-- 基本租金 -->
-          <td>${{item[3]}}</td> <!-- 每日租金 -->
-          <td>{{useDays}}</td> <!-- 天數 -->
-          <td>{{item[4]}}</td> <!-- 商品數量 -->
-          <td>${{(item[2] * item[4]) + (item[3] * useDays * item[4])}}</td> <!-- 小計：(基本租金*數量)+(每日租金*天數*數量) -->
+          <td>${{item[2]}}</td><!-- 基本租金 -->
+          <td>${{item[3]}}</td><!-- 每日租金 -->
+          <td>{{useDays}}</td><!-- 租借天數 -->
+          <td>{{item[4]}}</td><!-- 商品數量 -->
+          <td>{{item[2] * item[4] + item[3] * useDays * item[4]}}</td><!-- 小計 -->
           <td><button class="btn btn-secondary" @click="delBtn(index)">刪除</button></td>
         </tr>
       </tbody>
@@ -49,13 +47,16 @@
 </template>
 
 <script>
+const arr = JSON.parse(localStorage.getItem('product'))
+const useDays = localStorage.getItem('useDays')
 export default {
   data() {
     return {
       selectedStore: localStorage.getItem('selectedStore'),
       selectedDate: localStorage.getItem('selectedDate'),
       selectedProduct: JSON.parse(localStorage.getItem('product')),
-      useDays: localStorage.getItem('useDays'),
+      useDays: useDays,
+      subtotal: [],
     }
   },
   methods: {
@@ -72,15 +73,17 @@ export default {
       localStorage.setItem('product', JSON.stringify(arr)) // 將處理過的變數arr塞回localStorage中的product
       location.reload() // 重新整理頁面
     },
+
   },
   computed: {
     total() {
-      const arr = JSON.parse(localStorage.getItem('product'))
-      const useDays = localStorage.getItem('useDays')
-      var sum = 0
+      let sum = null
       arr.forEach((item) => {
+        this.subtotal.push(item[2] * item[4] + item[3] * useDays * item[4])
+        localStorage.setItem('subtotal', JSON.stringify(this.subtotal))
         sum += item[2] * item[4] + item[3] * useDays * item[4]
       })
+      localStorage.setItem('total', sum) // 將總金額紀錄在localStorage
       return sum
     },
   },

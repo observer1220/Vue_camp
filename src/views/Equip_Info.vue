@@ -9,7 +9,7 @@
           <option value="南高雄_高軟門市">南高雄_高軟門市</option>
         </select>
         <h5>步驟2：選擇租用時間</h5>
-        <flat-pickr v-model="date" :config="config" placeholder="請選擇租借日期" class="flat-pickr" @change="selectedDate"></flat-pickr>
+        <flat-pickr v-model="date" :config="config" placeholder="請選擇租借日期" class="flat-pickr" @change.prevent="selectedDate"></flat-pickr>
         <h5>步驟3：選擇租用商品</h5>
         <select class="catalog" @change="selectedCatalog($event)" v-model="currentCatalog">
           <option value="" disabled selected>請選擇租賃項目</option>
@@ -68,6 +68,10 @@ export default {
           firstDayOfWeek: 1, // 日曆從Monday開始跳
           rangeSeparator: '~',
         },
+        // 當關閉日曆時再觸發事件(頁面更新)
+        onClose: function() {
+          location.reload()
+        },
       },
     }
   },
@@ -84,7 +88,6 @@ export default {
     selectedDate() {
       const daysInRange = document.getElementsByClassName('inRange') // 選取class名稱為inRange的項目
       const daysLengthTotal = daysInRange.length + 2 // +2是因為startRange跟endRange沒有被選到
-      console.log(daysLengthTotal)
       localStorage.setItem('selectedDate', this.date)
       localStorage.setItem('useDays', daysLengthTotal)
     },

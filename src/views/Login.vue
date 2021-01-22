@@ -50,7 +50,7 @@ export default {
         .then((res) => {
           console.log(res)
           // 當確認使用者email與password後，將使用者登入狀態(loginCheck)與使用者名稱(loginName)儲存在localStorage
-          if (res.data.status === '會員驗證登入成功') {
+          if (res.data.Message === '會員驗證登入成功') {
             const loginStatus = {
               loginCheck: true,
               email: this.user.email,

@@ -6,19 +6,15 @@
         <li>您本次的消費總額共計為<strong>$5840</strong>元</li>
       </ul>
       <hr>
-
       <ul class="payment-info">
         <li>訂單號碼：<strong>AEGF2046</strong></li>
         <li>訂單日期：<strong>2021-01-06</strong></li>
       </ul>
       <hr>
-
       <ul class="payment-details mb-5">
         <strong>訂單列表</strong>
-        <ul>
-          <li><span>Land Lock 別墅帳象牙白</span></li>
-          <li><span>Amenity Dome Elfield 1990年復刻款</span></li>
-          <li><span>Amenity Dome 寢室帳 S</span></li>
+        <ul v-for="(item, key) in items" :key="key">
+          <li><span>{{item[0]}}</span></li>
         </ul>
       </ul>
       <div class="text-center">
@@ -29,7 +25,18 @@
 </template>
 
 <script>
-export default {}
+const arr = JSON.parse(localStorage.getItem('product'))
+export default {
+  data() {
+    return {
+      items: [],
+    }
+  },
+  created() {
+    this.items = arr
+    console.log(this.items)
+  },
+}
 </script>
 
 <style lang="scss">

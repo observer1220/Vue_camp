@@ -19,6 +19,8 @@
     "cleave.js": "^1.6.0",
     "core-js": "^3.6.5",
     "crypto-js": "^4.0.0",
+    "emailjs": "^3.4.0",
+    "emailjs-com": "^2.6.4",
     "file-loader": "^6.2.0",
     "firebase": "^8.2.1",
     "jquery": "^3.5.1",

@@ -73,8 +73,8 @@ export default {
       })
       var config = {
         method: 'post',
-        url: 'https://gocamping.rocket-coding.com/Guest/Register',
         // url: 'https://fathomless-brushlands-42339.herokuapp.com/todo4',
+        url: 'https://gocamping.rocket-coding.com/Guest/Register',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           Authorization: '__cfduid=db444a026ebafd355fb3138f06f54e2701610528085',
