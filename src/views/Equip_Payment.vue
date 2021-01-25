@@ -71,11 +71,11 @@
               <option value="2023">2023</option>
               <option value="2024">2024</option>
               <option value="2025">2025</option>
-              <option value="2024">2026</option>
-              <option value="2025">2027</option>
-              <option value="2024">2028</option>
-              <option value="2025">2029</option>
-              <option value="2025">2030</option>
+              <option value="2026">2026</option>
+              <option value="2027">2027</option>
+              <option value="2028">2028</option>
+              <option value="2029">2029</option>
+              <option value="2030">2030</option>
             </select>
           </div>
         </div>
@@ -126,13 +126,7 @@ export default {
         creditCard: true,
         delimiter: '-',
       },
-      product_name: [],
-      product_model: [],
-      product_base_price: [],
-      product_daily_price: [],
-      useDays: null,
-      product_subtotal: null,
-      product_total: null,
+      // product: [],
     }
   },
   components: {
@@ -153,18 +147,16 @@ export default {
         Expired_month: this.form.CreditCard.month,
         Expired_year: this.form.CreditCard.year,
         // 租賃商品
-        product_name: this.product_name,
-        product_model: this.product_model,
-        product_base_price: this.product_base_price,
-        product_daily_price: this.product_daily_price,
-        useDays: this.useDays,
-        product_subtotal: this.product_subtotal,
-        product_total: this.product_total,
+        OrderLists: arr,
+        useDays: localStorage.getItem('useDays'),
+        subtotal: JSON.parse(localStorage.getItem('subtotal')),
+        total: localStorage.getItem('total'),
       })
       var config = {
         method: 'post',
         url: 'https://fathomless-brushlands-42339.herokuapp.com/todo4',
-        // url: 'https://gocamping.rocket-coding.com/Order/Add',
+        // url: 'https://gocamping.rocket-coding.com/Cart/Add',
+        // url: 'https://4c7e2b9cb31a.ngrok.io/Cart/Add',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           Authorization: '__cfduid=db444a026ebafd355fb3138f06f54e2701610528085',
@@ -187,34 +179,31 @@ export default {
           .then((res) => {
             console.log(res)
             // Email功能
-          //   const emailTemplate = {
-          //     name: res.data.name,
-          //     product_order_num: new Date().getTime(),
-          //   }
-          //   emailjs.send('service_oylafrq', 'template_bymdjpc', emailTemplate, 'user_cb46q3flILaW5AzIRhh2Z').then((result) => {
-          //     console.log('寄送成功')
-          //   }, (error) => {
-          //     console.log('寄送失敗', error)
-          //   })
-          // }).catch((error) => {
-          //   console.log(error)
+            //   const emailTemplate = {
+            //     name: res.data.name,
+            //     product_order_num: new Date().getTime(),
+            //   }
+            //   emailjs.send('service_oylafrq', 'template_bymdjpc', emailTemplate, 'user_cb46q3flILaW5AzIRhh2Z').then((result) => {
+            //     console.log('寄送成功')
+            //   }, (error) => {
+            //     console.log('寄送失敗', error)
+            //   })
+            // }).catch((error) => {
+            //   console.log(error)
+            this.$swal({
+              icon: 'success',
+              title: '訂單完成',
+              html: '<strong style="color:orange">請紀錄「訂單明細」以便日後查詢</strong>',
+              confirmButtonText: '確認',
+            })
+            this.$router.push('/Equip_Completed')
           })
       }
-
-      // this.$router.push('/Equip_Completed')
+      //
     },
   },
   created() {
-    arr.forEach(item => {
-      this.product_name.push(item[0])
-      this.product_model.push(item[1])
-      this.product_base_price.push(item[2])
-      this.product_daily_price.push(item[3])
-      this.useDays = localStorage.getItem('useDays')
-      this.product_subtotal = JSON.parse(localStorage.getItem('subtotal'))
-      this.product_total = localStorage.getItem('total')
-    })
-    // console.log(this.product_name)
+    console.log(arr)
   },
 }
 </script>

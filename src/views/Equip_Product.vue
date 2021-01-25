@@ -2,7 +2,6 @@
   <div class="equip-product-container">
     <ul>
       <li class="equip-product-info">
-
         <v-zoomer>
           <div class="load">
             <img src="https://magossystems.com/MagosWordpress/wp-content/themes/Magos/images/loading_slider.gif" alt="">
@@ -11,7 +10,7 @@
         </v-zoomer>
         <div class="equip-product-des">
           <p>品牌：{{ brand }}</p>
-          <p>商品：{{ title }}</p>
+          <p>商品：{{ product_name }}</p>
           <p>型號：{{ model }}</p>
           <p>基本租金：${{ base_price }}元</p>
           <p>每日租金：${{ daily_price }}元</p>
@@ -42,7 +41,7 @@ export default {
       items: [],
       picture: null,
       brand: null,
-      title: null,
+      product_name: null,
       model: null,
       base_price: null,
       daily_price: null,
@@ -64,13 +63,13 @@ export default {
         // 用JSON.parse撈product的內容，是為了將productHistory設定為陣列
         const productHistory = JSON.parse(localStorage.getItem('product')) || []
         // 將productHistory設定為陣列，是因為push方法只能把字串或數值推到陣列裡
-        productHistory.push([
-          this.title,
-          this.model,
-          this.base_price,
-          this.daily_price,
-          this.quantity,
-        ])
+        productHistory.push({
+          product_name: this.product_name,
+          model: this.model,
+          base_price: this.base_price,
+          daily_price: this.daily_price,
+          quantity: this.quantity,
+        })
         // 用JSON.stringify把值傳到localStorage，是因productHistory原本是一組陣列，而 localStorage只能接收字串
         localStorage.setItem('product', JSON.stringify(productHistory))
         alert('已加入購物車')
@@ -98,7 +97,7 @@ export default {
         if (num === `${item.product_id}`) {
           that.picture = item.picture
           that.brand = item.brand
-          that.title = item.name
+          that.product_name = item.name
           that.model = item.model
           that.base_price = item.base_price
           that.daily_price = item.daily_price
@@ -119,9 +118,13 @@ export default {
     align-items: center;
     .equip-product-pic {
       width: 450px;
-      height: 400px;
+      height: 450px;
       object-fit: contain;
       margin-right: 50px;
+    }
+    // 尚未載入圖片時，隱藏圖片邊框
+    img:not([src]) {
+      display:none;
     }
     .equip-product-des {
       p {

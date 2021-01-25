@@ -18,14 +18,14 @@
       </thead>
       <tbody>
         <tr v-for="(item, index, key) in selectedProduct" :key="key">
-          <th scope="row">{{index+1}}</th> <!-- 項目序號 -->
-          <td>{{item[0]}}</td><!-- 商品名稱 -->
-          <td>{{item[1]}}</td> <!-- 商品型號 -->
-          <td>${{item[2]}}</td><!-- 基本租金 -->
-          <td>${{item[3]}}</td><!-- 每日租金 -->
-          <td>{{useDays}}</td><!-- 租借天數 -->
-          <td>{{item[4]}}</td><!-- 商品數量 -->
-          <td>{{item[2] * item[4] + item[3] * useDays * item[4]}}</td><!-- 小計 -->
+          <th scope="row">{{index+1}}</th>
+          <td>{{item.product_name}}</td>
+          <td>{{item.model}}</td>
+          <td>${{item.base_price}}</td>
+          <td>${{item.daily_price}}</td>
+          <td>{{useDays}}</td>
+          <td>{{item.quantity}}</td>
+          <td>${{item.base_price * item.quantity + item.daily_price * useDays * item.quantity}}</td>
           <td><button class="btn btn-secondary" @click="delBtn(index)">刪除</button></td>
         </tr>
       </tbody>
@@ -79,9 +79,9 @@ export default {
     total() {
       let sum = null
       arr.forEach((item) => {
-        this.subtotal.push(item[2] * item[4] + item[3] * useDays * item[4])
+        this.subtotal.push(item.base_price * item.quantity + item.daily_price * useDays * item.quantity)
         localStorage.setItem('subtotal', JSON.stringify(this.subtotal))
-        sum += item[2] * item[4] + item[3] * useDays * item[4]
+        sum += item.base_price * item.quantity + item.daily_price * useDays * item.quantity
       })
       localStorage.setItem('total', sum) // 將總金額紀錄在localStorage
       return sum
@@ -89,6 +89,11 @@ export default {
   },
   created() {
     // localStorage.clear() 刪除所有儲存在localStorage的資料
+    console.log()
+    if (arr.length === 0) {
+      alert('您尚未添加任何物品至購物車')
+      this.$router.push('/Equip')
+    }
   },
 }
 </script>

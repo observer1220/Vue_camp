@@ -68,7 +68,7 @@ const routes = [
     path: '/Equip_Completed',
     component: EquipCompleted,
     meta: {
-      title: '訂單完成',
+      title: '訂單明細',
       requiresAuth: true,
     },
   },
