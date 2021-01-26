@@ -4,7 +4,7 @@
       <li class="equip-product-info">
         <v-zoomer>
           <div class="load">
-            <img src="https://magossystems.com/MagosWordpress/wp-content/themes/Magos/images/loading_slider.gif" alt="">
+            <img src="https://cliply.co/wp-content/uploads/2020/02/372002600_MOUNTAINS_400px.gif" alt="">
           </div>
           <img class="equip-product-pic" :src="picture" alt="" />
         </v-zoomer>
@@ -72,8 +72,15 @@ export default {
         })
         // 用JSON.stringify把值傳到localStorage，是因productHistory原本是一組陣列，而 localStorage只能接收字串
         localStorage.setItem('product', JSON.stringify(productHistory))
-        alert('已加入購物車')
-        location.reload()
+        this.$swal({
+          icon: 'success',
+          title: '已加入購物車',
+          confirmButtonText: '確認',
+          closeOnConfirm: false,
+          willClose: () => {
+            location.reload()
+          },
+        })
       }
     },
   },

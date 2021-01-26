@@ -2,15 +2,15 @@
   <div>
     <div class="equip-container">
       <div class="left-side">
-        <h5>步驟1：選擇取貨地點</h5>
+        <h5><strong>步驟1：選擇取貨地點</strong></h5>
         <select class="selectedStore" @change="selectedStore($event)">
           <option value="請選擇取貨地點" disabled selected>請選擇取貨地點</option>
           <option value="北高雄_榮耀門市">北高雄_榮耀門市</option>
           <option value="南高雄_高軟門市">南高雄_高軟門市</option>
         </select>
-        <h5>步驟2：選擇租用時間</h5>
+        <h5><strong>步驟2：選擇租用時間</strong></h5>
         <flat-pickr v-model="date" :config="config" placeholder="請選擇租借日期" class="flat-pickr" @change.prevent="selectedDate"></flat-pickr>
-        <h5>步驟3：選擇租用商品</h5>
+        <h5><strong>步驟3：選擇租用商品</strong></h5>
         <select class="catalog" @change="selectedCatalog($event)" v-model="currentCatalog">
           <option value="" disabled selected>請選擇租賃項目</option>
           <option :value="location" v-for="location in locations" :key="location">{{ location }}</option>
@@ -23,17 +23,15 @@
         <ul class="products">
           <li v-for="(item,key) in filterData" :key="key">
             <router-link :to="{ path: '/Equip/' + item.product_id }">
-              <img :src="item.picture" alt="">
-              <p>{{ item.name }}</p>
+              <img :src="item.picture" alt="" v-if="item.inventory >= 1">
+              <div class="soldout" v-if="item.inventory < 1">
+                <img :src="item.picture" alt="">
+              </div>
+              <strong>{{ item.name }}</strong>
               <p>型號：{{ item.model }}</p>
             </router-link>
           </li>
         </ul>
-        <!-- <ul class="pagination justify-content-center">
-          <li class="page-item" v-for="page in filterData.length" :key="page">
-            <a class="page-link" href="#">{{ page }}</a>
-          </li>
-        </ul> -->
       </div>
     </div>
     <div class="footer">
@@ -54,7 +52,7 @@ import 'flatpickr/dist/flatpickr.css'
 export default {
   data() {
     return {
-      items: [], // this.items = res.data.features用來儲存口罩地圖的原始資料
+      items: [],
       locations: [],
       currentStore: '請選擇門市',
       currentCatalog: '帳篷',
@@ -124,7 +122,6 @@ export default {
       const load = document.querySelector('.load')
       load.innerHTML = ''
       this.items = res.data
-      // console.log(res.data)
       this.selectedCatalog()
     })
   },
@@ -139,6 +136,7 @@ export default {
   .left-side {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     padding: 10px;
     .selectedStore {
       font-size: 18px;
@@ -164,18 +162,37 @@ export default {
     .products {
       display: flex;
       flex-wrap: wrap;
-      height: 420px;
+      height: 360px;
       overflow-y: auto;
       li {
+        margin-top: 5px;
+        margin-right: 5px;
         padding: 5px;
         a {
-          text-decoration: none;
           display: flex;
           flex-direction: column;
           color: black;
+          text-decoration: none;
           img {
             width: 300px;
             object-fit: contain;
+          }
+          .soldout{
+            position:relative;
+            img{
+              opacity:20%;
+            }
+            &::after{
+              position:absolute;
+              top:45%;
+              left:20%;
+              z-index:1;
+              content:'Out of Stock';
+              color:red;
+              opacity:70%;
+              font-weight: 900;
+              font-size: 28px;
+            }
           }
         }
         &:hover {

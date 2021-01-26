@@ -154,9 +154,9 @@ export default {
       })
       var config = {
         method: 'post',
-        url: 'https://fathomless-brushlands-42339.herokuapp.com/todo4',
-        // url: 'https://gocamping.rocket-coding.com/Cart/Add',
-        // url: 'https://4c7e2b9cb31a.ngrok.io/Cart/Add',
+        // url: 'https://fathomless-brushlands-42339.herokuapp.com/todo4',
+        url: 'https://gocamping.rocket-coding.com/Order/Add',
+        // url: 'https://a352c6271d6d.ngrok.io/Order/Add',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           Authorization: '__cfduid=db444a026ebafd355fb3138f06f54e2701610528085',
@@ -199,7 +199,6 @@ export default {
             this.$router.push('/Equip_Completed')
           })
       }
-      //
     },
   },
   created() {

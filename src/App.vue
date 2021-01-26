@@ -2,6 +2,7 @@
   <div>
     <div id="nav">
       <router-link to="/"><img class="logo" src="@/assets/logo.jpg" alt="" /></router-link>
+      <router-link to="/">首頁</router-link>
       <router-link to="/Equip">設備租賃</router-link>
       <router-link to="/Camp">營地資訊</router-link>
       <router-link to="/Equip_Carts">購物車</router-link>
