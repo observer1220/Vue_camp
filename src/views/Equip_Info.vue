@@ -17,10 +17,10 @@
         </select>
       </div>
       <div class="right-side">
-        <div class="load">
-          <img src="https://cliply.co/wp-content/uploads/2020/02/372002600_MOUNTAINS_400px.gif" alt="">
-        </div>
         <ul class="products">
+          <div class="load">
+            <img src="https://cliply.co/wp-content/uploads/2020/02/372002600_MOUNTAINS_400px.gif" alt="">
+          </div>
           <li v-for="(item,key) in filterData" :key="key">
             <router-link :to="{ path: '/Equip/' + item.product_id }">
               <img :src="item.picture" alt="" v-if="item.inventory >= 1">
@@ -28,13 +28,22 @@
                 <img :src="item.picture" alt="">
               </div>
               <strong>{{ item.name }}</strong>
-              <p>型號：{{ item.model }}</p>
+              <strong>商品型號：{{ item.model }}</strong>
+              <strong>基本租金：{{item.base_price}}</strong>
             </router-link>
           </li>
         </ul>
+        <!-- 分頁的部分 -->
+        <nav class="my-5" aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" v-for="(page,key) in pages" :class="{active: currentPage === page - 1}" :key="key">
+              <a class="page-link" href="#" @click.prevent="currentPage = (page - 1)">{{ page }}</a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
-    <div class="footer">
+    <div class="equip-info-footer ">
       <h3>荒野探索股份有限公司2020, All Rights Reserved</h3>
       <router-link to="/">關於我們</router-link> |
       <router-link to="/">隱私權政策</router-link> |
@@ -71,6 +80,8 @@ export default {
           location.reload()
         },
       },
+      currentPage: 0,
+      pages: null,
     }
   },
   components: {
@@ -98,14 +109,29 @@ export default {
     },
   },
   computed: {
-    filterData() {
-      let filterData = []
+    filterData(index) {
+      // 縣市區域的過濾
+      let filterData = [] // 用來存放選取分類頁的物件
+      // 當分類不等於空值時，執行以下動作
       if (this.currentCatalog !== '') {
+        // 在filterData裡塞入分類為「特定項目」之物件
         filterData = this.items.filter((item) => {
-          return item.category === this.currentCatalog
+          return item.category === this.currentCatalog // 將回傳為true的值丟進filterData陣列
         })
       }
-      return filterData
+      // 分頁：此時的filterData，只有「特定項目」之物件(item為物件內容、index為序號)
+      const pageData = [] // 用來存放特定頁面的物件
+      filterData.forEach((item, index) => {
+        // 當序號除以6的餘數為0時，在pageData裡推入一個空陣列
+        if (index % 3 === 0) {
+          pageData.push([])
+        }
+        const page = parseInt(index / 3)
+        pageData[page].push(item)
+        this.pages = pageData.length // 分頁數量
+        return this.currentPage
+      })
+      return pageData[this.currentPage]
     },
   },
   created() {
@@ -130,13 +156,15 @@ export default {
 
 <style lang="scss">
 .equip-container {
+  max-width: 1280px;
+  margin:0 auto;
   display: flex;
-  justify-content: center;
+  justify-content:center;
   margin-top: 30px;
   .left-side {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    margin-top: 30px;
     padding: 10px;
     .selectedStore {
       font-size: 18px;
@@ -162,8 +190,9 @@ export default {
     .products {
       display: flex;
       flex-wrap: wrap;
-      height: 360px;
-      overflow-y: auto;
+      .load{
+        margin:0 auto;
+        }
       li {
         margin-top: 5px;
         margin-right: 5px;
@@ -204,7 +233,11 @@ export default {
     }
   }
 }
-.footer {
+.equip-info-footer {
+  position:fixed;
+  right:0;
+  left:0;
+  bottom:0;
   background: #2c3e50;
   padding-left: 30px;
   padding-bottom: 3px;

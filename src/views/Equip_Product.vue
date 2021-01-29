@@ -25,7 +25,8 @@
           </p>
           <div class="product-bar">
             <button class="btn btn-danger" @click="goShopping">繼續購物</button>
-            <button class="btn btn-primary" @click="addBtn()">加入購物車</button>
+            <button class="btn btn-primary" @click="addBtn()" v-if="inventory >= 1">加入購物車</button>
+            <button class="btn btn-secondary" v-if="inventory < 1" disabled>暫無庫存</button>
             <button class="btn btn-danger" @click="BillBtn">前往結帳</button>
           </div>
         </div>
@@ -46,6 +47,7 @@ export default {
       base_price: null,
       daily_price: null,
       quantity: 1,
+      inventory: null,
     }
   },
   methods: {
@@ -108,6 +110,7 @@ export default {
           that.model = item.model
           that.base_price = item.base_price
           that.daily_price = item.daily_price
+          that.inventory = item.inventory
         }
       })
     })

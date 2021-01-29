@@ -7,6 +7,7 @@ import VueZoomer from 'vue-zoomer'
 import '@/assets/scss/all.scss'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
+
 // import * as firebase from 'firebase'
 
 // var firebaseConfig = {

@@ -3,18 +3,18 @@
     <div class="invoice-wrapper col-7">
       <ul class="intro">
         <li><strong>【注意事項】</strong></li>
-        <li>1. 請於租賃日期前一天完成匯款及現場取貨，逾期者將自動取消訂單。</li>
-        <li>2. 現場取貨將由租/借雙方確認驗貨細節，如有損毀將依損壞程度進行賠償。</li>
-        <li>3. 請攜帶「身份證正本」進行取貨</li>
+        <li>1. 最晚於租賃日前1天，完成匯款及現場取貨，逾期者將取消訂單。</li>
+        <li>2. 取貨時「<span style="color:red;font-weight:900">支付押金</span>」並由租賃雙方進行驗貨，如有損毀或零件遺失之情形，將依損壞程度進行賠償。</li>
+        <li>3. 請攜帶「身份證正本」進行取貨。</li>
+        <li>4. 押金為總價之50%，歸還時若無損壞之情形將全數退還。</li>
         <li><strong>【詐騙猖獗】</strong></li>
-        <li>本店決不會以簡訊通知消費者付款失敗或以任何理由要求您重新匯款。</li>
+        <li>1. 本店不會以簡訊通知消費者付款失敗或以任何理由要求您重新匯款。</li>
       </ul>
       <h3>訂單資訊</h3>
       <ul class="payment-info">
         <li>訂單編號：{{orderNum}}</li>
         <li>訂單日期：{{orderDate}}</li>
-        <li>付款狀態：尚未付款</li>
-        <li>出貨狀態：尚未取貨</li>
+        <li>付款狀態：付款完成</li>
       </ul>
       <hr>
       <h3>商品清單</h3>
@@ -43,10 +43,13 @@
         </table>
         <hr>
         <div class="sum text-right">
-          <p>押金：${{total/2}}</p>
-          <p>總計：${{total}} </p>
+          <p>總價：${{newTotal}}</p>
+          <p>押金<span style="font-size:14px">(總價50%)</span>：${{Math.round(newTotal/2)}}</p>
         </div>
       </ul>
+      <div class="text-center">
+        <button class="btn btn-primary" @click.prevent="confirmBtn">回到商城</button>
+      </div>
     </div>
   </div>
 </template>
@@ -64,24 +67,28 @@ export default {
       useDays: useDays,
       orderDate: null,
       orderNum: null,
+      newTotal: null,
     }
   },
-  computed: {
-    total() {
-      let sum = null
-      arr.forEach((item) => {
-        sum += item.base_price * item.quantity + item.daily_price * useDays * item.quantity
-      })
-      localStorage.setItem('total', sum) // 將總金額紀錄在localStorage
-      return sum
+  methods: {
+    confirmBtn() {
+      // 將localStorage裡的所有資料刪除
+      localStorage.setItem('product', '[]')
+      localStorage.removeItem('total')
+      localStorage.removeItem('order_num')
+      localStorage.removeItem('useDays')
+      localStorage.removeItem('subtotal')
+      localStorage.removeItem('selectedStore')
+      localStorage.removeItem('selectedDate')
+      this.$router.push('/')
     },
   },
   created() {
     this.items = arr
     this.orderDate = orderDate
-    this.orderNum = _date.getTime()
-    // console.log(_date)
-    // console.log(orderDate)
+    this.orderNum = localStorage.getItem('order_num')
+    this.newTotal = localStorage.getItem('total')
+    console.log(this.newTotal)
   },
 }
 </script>

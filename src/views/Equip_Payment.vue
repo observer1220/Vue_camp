@@ -1,27 +1,26 @@
 <template>
   <div class="row justify-content-center">
-    <form class="col-5">
+    <form class="col-4">
       <h4>取貨人資料</h4>
       <div class="form-group mb-1">
         <label for="username"></label>
-        <span style="color:red">*</span><strong>姓名</strong>
+        <strong>姓名</strong>
         <input type="text" class="form-control" name="name" id="username" v-model="form.user.name" placeholder="中文姓名(取貨用)">
       </div>
       <div class="form-group mb-1">
         <label for="useremail"></label>
-        <span style="color:red">*</span><strong>電子郵件</strong>
+        <strong>電子郵件</strong>
         <input type="email" class="form-control" name="email" id="useremail" v-model="form.user.email" placeholder="電子郵件" required>
       </div>
       <div class="form-group mb-1">
         <label for="usertel"></label>
-        <span style="color:red">*</span><strong>行動電話</strong>
+        <strong>行動電話</strong>
         <input type="tel" class="form-control" name="tel" id="usertel" v-model="form.user.tel" placeholder="行動電話">
       </div>
       <div class="form-group mb-1">
         <label for="userid"></label>
-        <span style="color:red">*</span><strong>身分證字號</strong>
+        <strong>身分證字號</strong>
         <input type="id" class="form-control" name="id" id="userid" v-model="form.user.ID_Card" placeholder="身份證字號">
-        <span class="text-danger">*字號欄位不得留白</span>
       </div>
       <hr>
       <h4>付款方式與發票</h4>
@@ -126,7 +125,6 @@ export default {
         creditCard: true,
         delimiter: '-',
       },
-      // product: [],
     }
   },
   components: {
@@ -177,19 +175,7 @@ export default {
       } else {
         this.$http(config)
           .then((res) => {
-            console.log(res)
-            // Email功能
-            //   const emailTemplate = {
-            //     name: res.data.name,
-            //     product_order_num: new Date().getTime(),
-            //   }
-            //   emailjs.send('service_oylafrq', 'template_bymdjpc', emailTemplate, 'user_cb46q3flILaW5AzIRhh2Z').then((result) => {
-            //     console.log('寄送成功')
-            //   }, (error) => {
-            //     console.log('寄送失敗', error)
-            //   })
-            // }).catch((error) => {
-            //   console.log(error)
+            localStorage.setItem('order_num', res.data.order_num)
             this.$swal({
               icon: 'success',
               title: '訂單完成',
@@ -197,6 +183,18 @@ export default {
               confirmButtonText: '確認',
             })
             this.$router.push('/Equip_Completed')
+            // Email功能
+          //   const emailTemplate = {
+          //     name: res.data.name,
+          //     product_order_num: new Date().getTime(),
+          //   }
+          //   emailjs.send('service_oylafrq', 'template_bymdjpc', emailTemplate, 'user_cb46q3flILaW5AzIRhh2Z').then((result) => {
+          //     console.log('寄送成功')
+          //   }, (error) => {
+          //     console.log('寄送失敗', error)
+          //   })
+          // }).catch((error) => {
+          //   console.log(error)
           })
       }
     },
