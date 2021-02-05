@@ -34,7 +34,7 @@
     <div class="valuation">
       <div class="coupon">
         <input type="button" class="btn btn-primary" value="使用" @click.once="ApplyBtn" />
-        <input type="text" class="input-group-text couponText" placeholder="請輸入優惠券代碼" v-model="userCoupon" />
+        <input type="text" class="input-group-text couponText" placeholder="請輸入優惠券代碼" v-model="userCoupon" @keyup.enter="ApplyBtn" />
       </div>
       <div class="sum">
         <span>總計：${{ total }} </span>
@@ -42,24 +42,37 @@
     </div>
     <div class="confirm">
       <input type="button" class="btn btn-danger" value="繼續購物" @click="ShopBtn" />
-      <input type="button" class="btn btn-primary" value="前往結帳" @click="BillBtn" />
+      <!-- action="https://ccore.newebpay.com/MPG/mpg_gateway" method="post" -->
+      <form class="text-right">
+        <!-- <input style="display:none" type="text" id="MerchantID" name="MerchantID" :value="MerchantID">
+        <input style="display:none" type="text" id="TradeInfo" name="TradeInfo" :value="TradeInfo">
+        <input style="display:none" type="text" id="TradeSha" name="TradeSha" :value="TradeSha">
+        <input style="display:none" type="text" id="Version" name="Version" :value="Version"> -->
+        <!-- <input style="display:none" type="text" id="Amt" name="Amt" :value="sum"> -->
+        <input class="btn btn-primary" type="submit" value="前往結帳" @click="BillBtn">
+      </form>
     </div>
   </div>
 </template>
 
 <script>
+import qs from 'qs'
+// import emailjs from 'emailjs-com'
 const arr = JSON.parse(localStorage.getItem('product'))
-const useDays = localStorage.getItem('useDays')
 export default {
   data() {
     return {
       selectedStore: localStorage.getItem('selectedStore'),
       selectedDate: localStorage.getItem('selectedDate'),
       selectedProduct: JSON.parse(localStorage.getItem('product')),
-      useDays: useDays,
+      useDays: localStorage.getItem('useDays'),
       subtotal: [],
       userCoupon: null,
       sum: 0,
+      MerchantID: null,
+      TradeInfo: null,
+      TradeSha: null,
+      Version: null,
     }
   },
   methods: {
@@ -67,7 +80,28 @@ export default {
       this.$router.push('/Equip')
     },
     BillBtn() {
-      this.$router.push('/Equip_Payment')
+      const saveData = qs.stringify({
+        OrderLists: arr, // 使用者選取的商品
+        useDays: localStorage.getItem('useDays'), // 使用天數
+        subtotal: JSON.parse(localStorage.getItem('subtotal')), // 小計
+        total: localStorage.getItem('total'), // 總計,
+        // OrderNo: null,
+      })
+      var config = {
+        method: 'post',
+        url: 'https://287e157c5642.ngrok.io/Cart/Add',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: '__cfduid=db444a026ebafd355fb3138f06f54e2701610528085',
+        },
+        data: saveData,
+      }
+      this.$http(config)
+        .then((res) => {
+          localStorage.setItem('order_num', res.data.order_num)
+        })
+      console.log(saveData)
+      // this.$router.push('/Equip_Completed')
     },
     delBtn(index) {
       const arr = JSON.parse(localStorage.getItem('product')) // 擷取localStorage中稱為product的key值，並將其儲存在變數arr
@@ -99,22 +133,21 @@ export default {
   computed: {
     total() {
       arr.forEach((item) => {
-        this.subtotal.push(item.base_price * item.quantity + item.daily_price * useDays * item.quantity)
+        this.subtotal.push(item.base_price * item.quantity + item.daily_price * this.useDays * item.quantity)
         localStorage.setItem('subtotal', JSON.stringify(this.subtotal))
-        this.sum += item.base_price * item.quantity + item.daily_price * useDays * item.quantity
+        this.sum += item.base_price * item.quantity + item.daily_price * this.useDays * item.quantity
       })
-
       localStorage.setItem('total', this.sum) // 將總金額紀錄在localStorage
       return this.sum
     },
   },
   created() {
+    // 阻擋
     if (this.selectedStore == null) {
       this.$swal({
         icon: 'warning',
         title: '請選擇取貨地點',
         confirmButtonText: '確認',
-        // closeOnConfirm: false,
         willClose: () => {
           this.$router.push('/Equip')
         },
@@ -124,7 +157,6 @@ export default {
         icon: 'warning',
         title: '請選擇使用日期',
         confirmButtonText: '確認',
-        // closeOnConfirm: false,
         willClose: () => {
           this.$router.push('/Equip')
         },
@@ -134,12 +166,30 @@ export default {
         icon: 'warning',
         title: '您尚未添加任何物品至購物車',
         confirmButtonText: '確認',
-        // closeOnConfirm: false,
         willClose: () => {
           this.$router.push('/Equip')
         },
       })
     }
+    // 查閱訂單明細
+    // console.log(arr)
+    // 藍新金流：尚未完成
+    var config = {
+      method: 'post',
+      url: 'https://287e157c5642.ngrok.io/Cart/Add',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: '__cfduid=db444a026ebafd355fb3138f06f54e2701610528085',
+      },
+    }
+    this.$http(config)
+      .then((res) => {
+        this.MerchantID = res.data.MerchantID
+        this.TradeInfo = res.data.TradeInfo
+        this.TradeSha = res.data.TradeSha
+        this.Version = res.data.Version
+        console.log(res)
+      })
   },
 }
 </script>

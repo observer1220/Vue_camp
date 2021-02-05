@@ -29,7 +29,7 @@
               </div>
               <strong>{{ item.name }}</strong>
               <strong>商品型號：{{ item.model }}</strong>
-              <strong>基本租金：{{item.base_price}}</strong>
+              <strong>基本租金：${{item.base_price}}</strong>
             </router-link>
           </li>
         </ul>
@@ -44,7 +44,7 @@
       </div>
     </div>
     <div class="equip-info-footer ">
-      <h3>荒野探索股份有限公司2020, All Rights Reserved</h3>
+      <h3>荒野探索股份有限公司(僅供火箭隊專題使用)</h3>
       <router-link to="/">關於我們</router-link> |
       <router-link to="/">隱私權政策</router-link> |
       <router-link to="/">租賃契約書</router-link> |
@@ -63,7 +63,7 @@ export default {
     return {
       items: [],
       locations: [],
-      currentStore: '請選擇門市',
+      currentStore: '請選擇取貨地點',
       currentCatalog: '帳篷',
       date: null,
       config: {
@@ -76,9 +76,9 @@ export default {
           rangeSeparator: '~',
         },
         // 當關閉日曆時再觸發事件(頁面更新)
-        onClose: function() {
-          location.reload()
-        },
+        // onClose: function() {
+        //   location.reload()
+        // },
       },
       currentPage: 0,
       pages: null,
@@ -123,16 +123,21 @@ export default {
       const pageData = [] // 用來存放特定頁面的物件
       filterData.forEach((item, index) => {
         // 當序號除以6的餘數為0時，在pageData裡推入一個空陣列
-        if (index % 3 === 0) {
+        if (index % 6 === 0) {
           pageData.push([])
         }
-        const page = parseInt(index / 3)
+        const page = parseInt(index / 6)
+        // console.log(index)
         pageData[page].push(item)
         this.pages = pageData.length // 分頁數量
         return this.currentPage
       })
       return pageData[this.currentPage]
     },
+  },
+  watch: {
+
+    immediate: true,
   },
   created() {
     // const url = 'https://firebasestorage.googleapis.com/v0/b/vuecamp.appspot.com/o/Equip_Lease.json?alt=media&token=5eb3db57-78ea-40cf-b424-8ae10e296b36'
@@ -156,15 +161,14 @@ export default {
 
 <style lang="scss">
 .equip-container {
-  max-width: 1280px;
-  margin:0 auto;
   display: flex;
   justify-content:center;
-  margin-top: 30px;
+  max-width: 1280px;
+  margin:0 auto;
   .left-side {
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
+    margin-top: 60px;
     padding: 10px;
     .selectedStore {
       font-size: 18px;
@@ -190,9 +194,6 @@ export default {
     .products {
       display: flex;
       flex-wrap: wrap;
-      .load{
-        margin:0 auto;
-        }
       li {
         margin-top: 5px;
         margin-right: 5px;
@@ -234,13 +235,8 @@ export default {
   }
 }
 .equip-info-footer {
-  position:fixed;
-  right:0;
-  left:0;
-  bottom:0;
-  background: #2c3e50;
-  padding-left: 30px;
-  padding-bottom: 3px;
+  background:#128B44;
+  padding:15px;
   h3 {
     color: whitesmoke;
   }

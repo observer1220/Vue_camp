@@ -1,4 +1,6 @@
-import { createWebHistory, createRouter } from 'vue-router'
+// import { createWebHistory, createRouter } from 'vue-router'
+import { createWebHashHistory, createRouter } from 'vue-router'
+
 // 荒野探索-網站前台
 import Home from '../views/Home.vue' // 荒野探索網站首頁
 
@@ -7,7 +9,6 @@ import Equip from '../views/Equip.vue'
 import EquipInfo from '../views/Equip_Info.vue' // 設備租賃-首頁
 import EquipProduct from '../views/Equip_Product.vue' // 設備租賃-產品頁
 import EquipCarts from '../views/Equip_Carts.vue' // 設備租賃-購物車頁(需驗證)
-import EquipPayment from '../views/Equip_Payment.vue' // 選擇付款方式頁(需驗證)
 import EquipCompleted from '../views/Equip_Completed.vue'// 訂單完成頁(需驗證)
 
 // 營地資訊
@@ -28,7 +29,7 @@ const routes = [
     path: '/',
     component: Home,
     meta: {
-      title: '首頁',
+      title: '【荒野探索】',
     },
   },
   {
@@ -53,14 +54,6 @@ const routes = [
     component: EquipCarts,
     meta: {
       title: '購物車',
-      requiresAuth: true,
-    },
-  },
-  {
-    path: '/Equip_Payment',
-    component: EquipPayment,
-    meta: {
-      title: '選擇付款方式',
       requiresAuth: true,
     },
   },
@@ -117,7 +110,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
 })
 

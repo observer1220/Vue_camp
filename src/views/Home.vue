@@ -2,16 +2,16 @@
   <div>
     <div class="home-container">
       <div class="equip-main">
-        <h3><strong>【荒野探索 DISCOVER THE WILD WORLD】</strong></h3>
-        <swiper :options="swiperOption" class="equip-banner" :slides-per-view="3" :space-between="110" navigation :scrollbar="{ draggable: true }">
+        <h3 class="equip-main-title"><strong>【荒野探索】DISCOVER THE WILD WORLD</strong></h3>
+        <swiper :autoplay="{autoplay: true, rewind:true}" class="equip-banner" :slides-per-view="2" :space-between="0" navigation :scrollbar="{ draggable: true }">
           <swiper-slide>
-            <router-link to="/Equip"><img style="height:250px" src="@/assets/camp_swiper1.png" /></router-link>
+            <router-link to="/Equip"><img style="width:500px" src="@/assets/camp_swiper1.png" /></router-link>
           </swiper-slide>
           <swiper-slide>
-            <router-link to="/Camp"><img style="height:250px" src="@/assets/camp_swiper2.png" /></router-link>
+            <router-link to="/Camp"><img style="width:500px" src="@/assets/camp_swiper2.png" /></router-link>
           </swiper-slide>
           <swiper-slide>
-            <router-link to="/Equip"><img style="height:250px" src="@/assets/camp_swiper3.png" /></router-link>
+            <router-link to="/Equip"><img style="width:500px" src="@/assets/camp_swiper3.png" /></router-link>
           </swiper-slide>
         </swiper>
         <div class="coupon-banner text-center mt-1">
@@ -19,23 +19,23 @@
           <h3 style="color:snow;"><strong>輸入優惠代碼：JP2076</strong></h3>
         </div>
         <h3 class="equip-select-product mt-1"><strong>【精選商品】</strong></h3>
-        <swiper style="height:230px" :slides-per-view="5" :space-between="50" navigation :pagination="{ clickable: true }" :scrollbar="{ draggable: true }">
-          <swiper-slide v-for="(item,key) in items" :key="key">
+        <swiper :autoplay="{autoplay: true, rewind:true}" style="height:230px" :slides-per-view="4" :space-between="50" :pagination="{ clickable: true }" :scrollbar="{ draggable: true }">
+          <swiper-slide v-for="(item,key) in items.slice(0,8)" :key="key">
             <img :src="item.picture" alt="" style="height:150px">
             <p class="text-center">{{item.name}}</p>
           </swiper-slide>
         </swiper>
         <h3 class="camp-select-product mt-2"><strong>【露營景點】</strong></h3>
-        <swiper style="height:220px" :slides-per-view="4" :space-between="5" navigation :pagination="{ clickable: true }" :scrollbar="{ draggable: true }">
-          <swiper-slide v-for="(location,key) in locations" :key="key">
+        <swiper :autoplay="{autoplay: true, rewind:true}" style="height:220px" :slides-per-view="4" :space-between="5" navigation :pagination="{ clickable: true }" :scrollbar="{ draggable: true }">
+          <swiper-slide v-for="(location,key) in locations.slice(0,8)" :key="key">
             <img :src="location.picture" alt="" style="width:250px">
             <p class="text-center">{{location.name}}</p>
           </swiper-slide>
         </swiper>
       </div>
     </div>
-    <div class="footer">
-      <h3>荒野探索股份有限公司2020, All Rights Reserved</h3>
+    <div class="home-footer">
+      <h3>荒野探索股份有限公司(僅供火箭隊專題使用)</h3>
       <router-link to="">關於我們</router-link> |
       <router-link to="">隱私權政策</router-link> |
       <router-link to="">租賃契約書</router-link> |
@@ -45,13 +45,13 @@
   </div>
 </template>
 <script>
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Mousewheel } from 'swiper'
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Mousewheel, Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/swiper.scss'
 import 'swiper/components/navigation/navigation.scss'
 import 'swiper/components/pagination/pagination.scss'
 import 'swiper/components/scrollbar/scrollbar.scss'
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Mousewheel])
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Mousewheel, Autoplay])
 export default {
   data() {
     return {
@@ -101,13 +101,20 @@ export default {
     .equip-main{
       display: flex;
       flex-wrap: wrap;
+      .equip-main-title{
+        background:#128B44;
+        width: 1024px;
+        color:white;
+        border-radius: 10px;
+        user-select: none;
+        padding: 10px;
+      }
       .coupon-banner{
         display: flex;
         flex-direction: column;
         justify-content: center;
-        background:#ec407a;
+        background:#128B44;
         width: 1024px;
-        height: 80px;
         border-radius: 10px;
         user-select: none;
         h3{
@@ -123,20 +130,18 @@ export default {
           50%{opacity:0;}
         }
       }
-
     }
   }
-      .footer {
-      background: #2c3e50;
-      padding-left: 30px;
-      padding-bottom: 3px;
-      h3 {
-        color: whitesmoke;
-      }
-      a {
-        font-weight: 900;
-        color: whitesmoke;
-        text-decoration: none;
-      }
+  .home-footer {
+    background: #128B44;
+    padding:15px;
+    h3 {
+      color: whitesmoke;
     }
+    a {
+      font-weight: 900;
+      color: whitesmoke;
+      text-decoration: none;
+    }
+  }
 </style>

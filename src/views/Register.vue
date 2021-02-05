@@ -10,7 +10,7 @@
       </div>
       <div class="mb-3">
         <input type="password" class="form-control" v-model="user.password" placeholder="密碼" />
-        <div id="passwordHelp" class="form-text">需包含1~3個英文字母及5~8個阿拉伯數</div>
+        <div id="passwordHelp" class="form-text">需包含1~3個英文字母及5~8個阿拉伯數字</div>
       </div>
       <div class="mb-3">
         <input type="tel" class="form-control" name="tel" v-model="user.tel" placeholder="行動電話" @keyup.enter="RegisterBtn" />
@@ -37,6 +37,8 @@ const emailRule = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Z
 const passwordRule = /^(?=.*?[a-z]).{1,3}(?=.*?[0-9]).{5,8}$/
 // [0-9]{10,} 需輸入10位數的阿拉伯數字
 const telRule = /^[0-9]{10,}$/
+// 身份證字號：第1字需為A-Z大寫字母，第2~9字需為阿拉伯數字0-9
+// const IDCardRule = /^[A-Z]{1,}[0-9]{9,}$/
 export default {
   data() {
     return {
@@ -45,6 +47,7 @@ export default {
         email: null,
         password: null,
         tel: null,
+        // ID_Card: null,
       },
       // tel_options: {
       //   phone: true,

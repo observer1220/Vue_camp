@@ -47,7 +47,6 @@ router.beforeEach((to, from, next) => {
       // 當parseloginStatus.loginCheck為false時，顯示alert('請登入帳號，以進入此頁面')
     } else {
       alert('請登入帳號，以進入此頁面')
-      this.$router.push('/Login')
     }
   } else {
     next()

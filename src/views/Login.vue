@@ -8,12 +8,8 @@
       <div class="mb-3">
         <input type="password" class="form-control" v-model="user.password" placeholder="請輸入您的密碼" @keyup.enter="LoginBtn" id="exampleInputPassword1" aria-describedby="passwordHelp">
         <div id="passwordHelp" class="form-text">
-          Must be 8-20 characters and not contain spaces, special characters or emoji.
+          需包含1~3個英文字母及5~8個阿拉伯數字
         </div>
-      </div>
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">記住帳號</label>
       </div>
       <button class="btn btn-primary" @click.prevent="LoginBtn">登入</button>
     </form>

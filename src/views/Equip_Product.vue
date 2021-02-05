@@ -27,7 +27,7 @@
             <button class="btn btn-danger" @click="goShopping">繼續購物</button>
             <button class="btn btn-primary" @click="addBtn()" v-if="inventory >= 1">加入購物車</button>
             <button class="btn btn-secondary" v-if="inventory < 1" disabled>暫無庫存</button>
-            <button class="btn btn-danger" @click="BillBtn">前往結帳</button>
+            <button class="btn btn-danger" @click="BillBtn">前往購物車</button>
           </div>
         </div>
       </li>
